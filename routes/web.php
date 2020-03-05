@@ -20,7 +20,5 @@ Route::namespace('Auth')->group( function () {
 });
 
 Route::middleware('auth')->group( function () {
-    Route::get('/', function () {
-        return 'Está logado';
-    });
+    Route::get('/', 'DashboardController@index');
 });
