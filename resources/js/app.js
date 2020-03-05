@@ -1,25 +1,24 @@
-// require('./bootstrap');
-
-// window.Vue = require('vue');
-
-// Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-
-// const app = new Vue({
-//     el: '#app',
-// });
-
-import { InertiaApp } from '@inertiajs/inertia-vue'
 import Vue from 'vue'
+import route from 'ziggy'
+import VueMeta from 'vue-meta'
+import { InertiaApp } from '@inertiajs/inertia-vue'
+import { Ziggy } from '../assets/js/ziggy'
 
+Vue.mixin({ methods: { route: (name, params, absolute) => route(name, params, absolute, Ziggy) } });
+
+Vue.use(VueMeta)
 Vue.use(InertiaApp)
 
 const app = document.getElementById('app')
 
 new Vue({
-  render: h => h(InertiaApp, {
-    props: {
-      initialPage: JSON.parse(app.dataset.page),
-      resolveComponent: name => require(`./Pages/${name}`).default,
+    metaInfo: {
+        titleTemplate: (title) => title ? `${title} - AvaliD` : 'AvaliD'
     },
-  }),
+    render: h => h(InertiaApp, {
+        props: {
+            initialPage: JSON.parse(app.dataset.page),
+            resolveComponent: name => require(`./Pages/${name}`).default,
+        },
+    }),
 }).$mount(app)

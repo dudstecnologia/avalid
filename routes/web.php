@@ -16,7 +16,7 @@
 Route::namespace('Auth')->group( function () {
     Route::get('login')->uses('LoginController@showLoginForm')->middleware('guest')->name('login');
     Route::post('login')->uses('LoginController@login')->middleware('guest')->name('login.attempt');
-    Route::post('logout')->uses('LoginController@logout')->name('logout');
+    Route::get('logout')->uses('LoginController@logout')->name('logout');
 });
 
 Route::middleware('auth')->group( function () {
