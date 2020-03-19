@@ -1970,6 +1970,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   metaInfo: {
     title: 'Login'
@@ -44226,6 +44228,7 @@ var render = function() {
           _c("b-form-input", {
             staticClass: "text-center",
             attrs: {
+              type: "email",
               state:
                 _vm.$page.errors.email && _vm.$page.errors.email.lenght > 0,
               placeholder: "Email"
@@ -44252,6 +44255,7 @@ var render = function() {
           _c("b-form-input", {
             staticClass: "mt-2 text-center",
             attrs: {
+              type: "password",
               state:
                 _vm.$page.errors.password &&
                 _vm.$page.errors.password.lenght > 0,

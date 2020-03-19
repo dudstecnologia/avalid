@@ -6,6 +6,7 @@
             </div>
             <form id="form" @submit.prevent="submit">
                 <b-form-input
+                    type="email"
                     class="text-center"
                     v-model="form.email"
                     :state="$page.errors.email && $page.errors.email.lenght > 0"
@@ -16,6 +17,7 @@
                 </b-form-invalid-feedback>
 
                 <b-form-input
+                    type="password"
                     class="mt-2 text-center"
                     v-model="form.password"
                     :state="$page.errors.password && $page.errors.password.lenght > 0"
