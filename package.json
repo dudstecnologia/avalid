@@ -26,6 +26,9 @@
     "dependencies": {
         "@inertiajs/inertia": "^0.1.7",
         "@inertiajs/inertia-vue": "^0.1.2",
-        "vue-meta": "^2.3.3"
+        "bootstrap-vue": "^2.7.0",
+        "material-icons": "^0.3.1",
+        "vue-meta": "^2.3.3",
+        "vuesax": "^3.11.13"
     }
 }
