@@ -3,11 +3,8 @@ import route from 'ziggy'
 import VueMeta from 'vue-meta'
 import { InertiaApp } from '@inertiajs/inertia-vue'
 import { Ziggy } from '../assets/js/ziggy'
-import Vuesax from 'vuesax'
 import { BootstrapVue } from 'bootstrap-vue'
 
-import 'vuesax/dist/vuesax.css'
-import 'material-icons/iconfont/material-icons.css'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
@@ -15,7 +12,6 @@ Vue.mixin({ methods: { route: (name, params, absolute) => route(name, params, ab
 
 Vue.use(VueMeta)
 Vue.use(InertiaApp)
-Vue.use(Vuesax)
 Vue.use(BootstrapVue)
 
 const app = document.getElementById('app')
