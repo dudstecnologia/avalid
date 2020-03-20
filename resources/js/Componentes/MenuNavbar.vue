@@ -8,19 +8,14 @@
 
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav class="ml-auto">
-                    <b-nav-item-dropdown text="Lang" right>
-                        <b-dropdown-item href="#">EN</b-dropdown-item>
-                        <b-dropdown-item href="#">ES</b-dropdown-item>
-                        <b-dropdown-item href="#">RU</b-dropdown-item>
-                        <b-dropdown-item href="#">FA</b-dropdown-item>
+                    <b-nav-item-dropdown text="Cadastro" right>
+                        <b-dropdown-item>
+                            <inertia-link :href="route('admin.user.index')">Usuários</inertia-link>
+                        </b-dropdown-item>
                     </b-nav-item-dropdown>
 
-                    <b-nav-item-dropdown right>
-                        <template v-slot:button-content>
-                        <em>User</em>
-                        </template>
-                        <b-dropdown-item href="#">Profile</b-dropdown-item>
-                        <b-dropdown-item href="#">Sign Out</b-dropdown-item>
+                    <b-nav-item-dropdown text="Configurações" right>
+                        <b-dropdown-item href="#">E-mail</b-dropdown-item>
                     </b-nav-item-dropdown>
 
                     <b-nav-item @click="logout()" right>Sair</b-nav-item>
@@ -45,3 +40,20 @@ export default {
     }
 }
 </script>
+
+<style>
+    .dropdown-item:hover {
+        background-color: #fff;
+    }
+
+    .dropdown-item a {
+        text-decoration: none;
+        display: block;
+        color: black;
+    }
+
+    .dropdown-item a:hover {
+        text-decoration: none;
+        color: #757575;
+    }
+</style>
