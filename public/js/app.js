@@ -75540,19 +75540,14 @@ var Ziggy = {
     },
     "logout": {
       "uri": "logout",
-      "methods": ["POST"],
-      "domain": null
-    },
-    "teste": {
-      "uri": "teste",
       "methods": ["GET", "HEAD"],
       "domain": null
     }
   },
-  baseUrl: 'http://127.0.0.1:8000/',
+  baseUrl: 'http://avalid.eduardo/',
   baseProtocol: 'http',
-  baseDomain: '127.0.0.1',
-  basePort: 8000,
+  baseDomain: 'avalid.eduardo',
+  basePort: false,
   defaultParameters: []
 };
 

@@ -1,9 +1,9 @@
     var Ziggy = {
-        namedRoutes: {"login":{"uri":"login","methods":["GET","HEAD"],"domain":null},"login.attempt":{"uri":"login","methods":["POST"],"domain":null},"logout":{"uri":"logout","methods":["POST"],"domain":null},"teste":{"uri":"teste","methods":["GET","HEAD"],"domain":null}},
-        baseUrl: 'http://127.0.0.1:8000/',
+        namedRoutes: {"login":{"uri":"login","methods":["GET","HEAD"],"domain":null},"login.attempt":{"uri":"login","methods":["POST"],"domain":null},"logout":{"uri":"logout","methods":["GET","HEAD"],"domain":null}},
+        baseUrl: 'http://avalid.eduardo/',
         baseProtocol: 'http',
-        baseDomain: '127.0.0.1',
-        basePort: 8000,
+        baseDomain: 'avalid.eduardo',
+        basePort: false,
         defaultParameters: []
     };
 
