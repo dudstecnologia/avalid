@@ -98,11 +98,6 @@ export default {
         }
     },
     watch: {
-        // questoes: {
-        //     handler:function(newVal) {
-        //         this.$emit('altera-questoes', this.questoes)
-        //     }
-        // }
         questoes() {
             this.$emit('altera-questoes', this.questoes)
         }

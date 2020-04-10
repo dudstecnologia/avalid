@@ -60,11 +60,6 @@ class AvaliacaoController extends Controller
         return Redirect::back()->with('error', 'Erro ao selecionar a Avaliação');
     }
 
-    public function edit($id)
-    {
-        //
-    }
-
     public function update(AvaliacaoRequest $request, $id)
     {
         $avaliacao = AvaliacaoService::update($request->all(), $id);
@@ -74,10 +69,5 @@ class AvaliacaoController extends Controller
 		}
 		
 		return Redirect::back()->with('error', $avaliacao['msg']);
-    }
-
-    public function destroy($id)
-    {
-        //
     }
 }

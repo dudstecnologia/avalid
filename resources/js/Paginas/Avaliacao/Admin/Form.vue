@@ -100,18 +100,6 @@ export default {
         alteraQuestoes(q) {
             this.form.questoes = q
         }
-        // getDadosUsuario() {
-        // 	this.axios.get(this.route('admin.user.show', this.idUsuario))
-        // 		.then(({data}) => {
-        // 			this.form = data
-        // 		})
-        // 		.catch(err => {
-        // 			this.$swal({
-        // 				icon: 'error',
-        // 				text: 'Erro ao buscar os dados do usuário'
-        // 			})
-        // 		})
-        // }
     }
 }
 </script>

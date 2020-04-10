@@ -36,16 +36,9 @@
                         <span slot="perguntas" slot-scope="{ data }">
                             <b-badge variant="info">{{ data }}</b-badge>
                         </span>
-
-                        <span slot="status" slot-scope="{ data }">
-                            <b-badge :variant="data == 'Ativa' ? 'success' : 'danger'">{{ data }}</b-badge>
-                        </span>
-
                 </datatable-flex>
             </div>
         </div>
-
-        <!-- <form-usuario ref="modalUsuario"></form-usuario> -->
     </span>
 </template>
 
@@ -55,10 +48,6 @@ import Layout from '../../../Componentes/Layout'
 export default {
     metaInfo: { title: 'Usuários' },
     layout: Layout,
-    components: {
-        // Paginacao,
-        // FormUsuario
-    },
     props: {
         users: Object,
     },
@@ -69,41 +58,36 @@ export default {
     },
     methods: {
         editarAvaliacao(id) {
-            console.log(id)
-            this.$inertia.visit(this.route('admin.avaliacao.show', id), {
-                method: 'get'
-            })
-            // this.$refs.modalUsuario.idUsuario = id
-            // this.$refs.modalUsuario.exibeModal = true
+            this.$inertia.visit(this.route('admin.avaliacao.show', id), { method: 'get' })
         },
-        alterarStatus(user)
-        {
-            this.$swal({
-                text: "Deseja mesmo alterar o status?",
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sim',
-                cancelButtonText: 'Não'
-            }).then((result) => {
-                if (result.value) {
-                    this.axios.get(this.route('admin.user-alterarstatus', user))
-                        .then(({data}) => {
-                            this.$refs.tabelaUsuarios.atualizar()
-                            this.$swal({
-                                icon: 'success',
-                                text: 'Status alterado com sucesso'
-                            })
-                        })
-                        .catch(err => {
-                            this.$swal({
-                                icon: 'error',
-                                text: 'Erro ao alterar o status do usuário'
-                            })
-                        })
-                }
-            })
+        liberarAvaliacao(user) {
+            console.log(user)
+            // this.$swal({
+            //     text: "Deseja mesmo alterar o status?",
+            //     icon: 'question',
+            //     showCancelButton: true,
+            //     confirmButtonColor: '#3085d6',
+            //     cancelButtonColor: '#d33',
+            //     confirmButtonText: 'Sim',
+            //     cancelButtonText: 'Não'
+            // }).then((result) => {
+            //     if (result.value) {
+            //         this.axios.get(this.route('admin.user-alterarstatus', user))
+            //             .then(({data}) => {
+            //                 this.$refs.tabelaUsuarios.atualizar()
+            //                 this.$swal({
+            //                     icon: 'success',
+            //                     text: 'Status alterado com sucesso'
+            //                 })
+            //             })
+            //             .catch(err => {
+            //                 this.$swal({
+            //                     icon: 'error',
+            //                     text: 'Erro ao alterar o status do usuário'
+            //                 })
+            //             })
+            //     }
+            // })
         },
         acoesDataTable(value)
         {

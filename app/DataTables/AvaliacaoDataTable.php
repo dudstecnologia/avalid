@@ -30,24 +30,15 @@ class AvaliacaoDataTable extends DataTable
                         'id' => $avaliacao->id
                     ],
                     [
-                        'titulo' => 'Alterar Status',
-                        'classe' => 'fa fa-toggle-on',
-                        'funcao' => 'alterarStatus',
-                        'id' => $avaliacao->id
-                    ],
-                    [
-                        'titulo' => 'Excluir',
-                        'classe' => 'fa fa-trash',
-                        'funcao' => 'excluirAvaliacao',
+                        'titulo' => 'Liberar para Funcionários',
+                        'classe' => 'fas fa-clipboard-list',
+                        'funcao' => 'liberarAvaliacao',
                         'id' => $avaliacao->id
                     ]
                 ];
             })
             ->addColumn('perguntas', function($avaliacao) {
                 return $avaliacao->questoes->count();
-            })
-            ->editColumn('status', function ($avaliacao) {
-                return $avaliacao->status ? 'Ativa' : 'Inativa';
             });
     }
 
@@ -91,8 +82,7 @@ class AvaliacaoDataTable extends DataTable
                   ->width(60)
                   ->addClass('text-center'),
             Column::make('titulo')->title('Título'),
-            Column::make('perguntas')->title('N° de Perguntas'),
-            Column::make('status')
+            Column::make('perguntas')->title('N° de Perguntas')
         ];
     }
 
