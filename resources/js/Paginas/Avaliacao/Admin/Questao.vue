@@ -20,6 +20,8 @@
                     <b-form-textarea
                         v-model="q.pergunta"
                         placeholder="Título da pergunta"
+                        :state="q.pergunta.length > 0"
+                        :required="true"
                         rows="2">
                     </b-form-textarea>
 
@@ -52,6 +54,7 @@
 export default {
     data () {
         return {
+            indice: 0,
             tipo: 'multipla',
             tipos: [
                 { value: 'multipla', text: 'Múltipla Escolha' },
@@ -63,6 +66,7 @@ export default {
     methods: {
         addQuestao() {
             this.questoes.push({ 
+                // indice: indice++,
                 pergunta: '',
                 tipo: this.tipo,
                 range: {
@@ -74,6 +78,11 @@ export default {
         }
     },
     watch: {
+        // questoes: {
+        //     handler:function(newVal) {
+        //         this.$emit('altera-questoes', this.questoes)
+        //     }
+        // }
         questoes() {
             this.$emit('altera-questoes', this.questoes)
         }

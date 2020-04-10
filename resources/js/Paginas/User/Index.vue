@@ -45,14 +45,12 @@
 
 <script>
 import Layout from '../../Componentes/Layout'
-import Paginacao from '../../Componentes/Paginacao'
 import FormUsuario from './Form'
 
 export default {
     metaInfo: { title: 'Usuários' },
     layout: Layout,
     components: {
-        Paginacao,
         FormUsuario
     },
     props: {

@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Admin;
 
 use App\DataTables\AvaliacaoDataTable;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AvaliacaoRequest;
+use App\Services\AvaliacaoService;
 use App\Services\DatatableService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
 class AvaliacaoController extends Controller
@@ -32,9 +35,15 @@ class AvaliacaoController extends Controller
         return Inertia::render('Avaliacao/Admin/Form');
     }
 
-    public function store(Request $request)
+    public function store(AvaliacaoRequest $request)
     {
-        dd($request->all());
+        $avaliacao = AvaliacaoService::store($request->all());
+		
+		if ($avaliacao['status']) {
+			return Redirect::route('admin.avaliacao.index')->with('success', $avaliacao['msg']);
+		}
+		
+		return Redirect::back()->with('error', $avaliacao['msg']);
     }
 
     public function show($id)

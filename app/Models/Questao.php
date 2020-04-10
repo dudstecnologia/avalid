@@ -13,6 +13,10 @@ class Questao extends Model
         'obrigatoria'
     ];
 
+    protected $casts = [
+        'range' => 'json',
+    ];
+
     public function avaliacao()
     {
         return $this->belongsTo(Avaliacao::class);

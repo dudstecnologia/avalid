@@ -20,7 +20,7 @@ class CreateQuestaosTable extends Migration
             $table->json('range')->nullable();
             $table->boolean('obrigatoria')->default(true);
             $table->unsignedBigInteger('avaliacao_id');
-            $table->foreign('avaliacao_id')->references('id')->on('avaliacaos');
+            $table->foreign('avaliacao_id')->references('id')->on('avaliacaos')->onDelete('cascade');
             $table->timestamps();
         });
     }
