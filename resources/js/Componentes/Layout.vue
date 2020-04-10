@@ -18,6 +18,22 @@ export default {
         return {
 
         }
+    },
+    watch: {
+        '$page.flash'() {
+            if (this.$page.flash.success) {
+                this.$swal({
+                    icon: 'success',
+                    text: this.$page.flash.success
+                })
+            }
+            if (this.$page.flash.error) {
+                this.$swal({
+                    icon: 'error',
+                    text: this.$page.flash.error
+                })
+            }
+        }
     }
 }
 </script>

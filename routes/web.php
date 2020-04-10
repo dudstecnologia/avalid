@@ -11,5 +11,7 @@ Route::middleware('auth')->group( function () {
     Route::get('/', 'DashboardController@index');
     Route::namespace('Admin')->prefix('admin')->name('admin.')->group( function () {
         Route::resource('user', 'UserController');
+        Route::get('user-datatable', 'UserController@datatable')->name('user-datatable');
+        Route::get('user-alterarstatus/{id}', 'UserController@alterarStatus')->name('user-alterarstatus');
     });
 });
