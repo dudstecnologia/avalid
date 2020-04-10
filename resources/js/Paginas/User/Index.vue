@@ -96,16 +96,6 @@ export default {
                         })
                 }
             })
-            console.log('Vai alterar o status')
-            // this.$root.iziQuestion()
-            //     .then(sim => {
-            //         this.$http.get(this.$routes.route("restrito.alterar.status.setor", { setor }))
-            //         .then(response => {
-            //             this.$refs.tabelaSetores.atualizar();
-            //             this.$toast.success(response.data.msg || 'Status alterado com sucesso', "Sucesso!", this.$root.config.success);
-            //         })
-            //     })
-            //     .catch(nao => {})
         },
         acoesDataTable(value)
         {
@@ -113,9 +103,11 @@ export default {
         }
     },
     watch: {
-        '$page.flash.success'() {
-            this.$refs.tabelaUsuarios.atualizar()
-            this.$refs.modalUsuario.exibeModal = false
+        '$page.flash'() {
+            if (this.$page.flash.success) {
+                this.$refs.tabelaUsuarios.atualizar()
+                this.$refs.modalUsuario.exibeModal = false
+            }
         }
     }
 }

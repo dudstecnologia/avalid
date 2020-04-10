@@ -31,27 +31,33 @@ class UserController extends Controller
         return Inertia::render('User/Index');
     }
 
-    public function store(UserRequest $request)
-    {
-		$user = UserService::store($request->all());
-		
-		if ($user) {
-			return Redirect::back()->with('success', 'Usuário salvo com sucesso');
-		}
-		
-		return Redirect::back()->with('error', 'Erro ao salvar o usuário');
-	}
-	
-	public function show($id)
+    public function show($id)
 	{
 		$user = UserService::show($id);
 
 		return $user ? response($user, 200) : response('', 401);
 	}
 
-	public function update(Request $request, $id)
+    public function store(UserRequest $request)
+    {
+		$user = UserService::store($request->all());
+		
+		if ($user) {
+			return Redirect::route('admin.user.index')->with('success', 'Usuário salvo com sucesso');
+		}
+		
+		return Redirect::back()->with('error', 'Erro ao salvar o usuário');
+	}
+	
+	public function update(UserRequest $request, $id)
 	{
-		dd($id, $request->all());
+		$user = UserService::update($request->all(), $id);
+		
+		if ($user) {
+			return Redirect::route('admin.user.index')->with('success', 'Usuário atualizado com sucesso');
+		}
+		
+		return Redirect::back()->with('error', 'Erro ao atualizar o usuário');
 	}
 
 	public function alterarStatus($id)

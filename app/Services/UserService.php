@@ -8,10 +8,13 @@ use Throwable;
 
 class UserService
 {
-    public static function usersPagination()
+    public static function show($id)
     {
-        return User::select('id', 'name', 'email', 'admin')
-                    ->paginate(10);
+        try {
+            return User::findOrFail($id);
+        } catch (Throwable $th) {
+            return null;
+        }
     }
 
     public static function store($request)
@@ -29,10 +32,17 @@ class UserService
         }
     }
 
-    public static function show($id)
+    public static function update($request, $id)
     {
         try {
-            return User::findOrFail($id);
+            $user = User::findOrFail($id);
+
+            if (isset($request['password'])) {
+                $request['password'] = Hash::make($request['password']);
+            }
+
+            $user->update($request);
+            return $user;
         } catch (Throwable $th) {
             return null;
         }
