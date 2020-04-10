@@ -10,7 +10,10 @@
                 <b-navbar-nav class="ml-auto">
                     <b-nav-item-dropdown text="Cadastro" right>
                         <b-dropdown-item>
-                            <inertia-link :href="route('admin.user.index')">Usuários</inertia-link>
+                            <inertia-link :href="route('admin.user.index')">Usuário</inertia-link>
+                        </b-dropdown-item>
+                        <b-dropdown-item>
+                            <inertia-link :href="route('admin.avaliacao.index')">Avaliação</inertia-link>
                         </b-dropdown-item>
                     </b-nav-item-dropdown>
 

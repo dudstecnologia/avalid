@@ -3,7 +3,10 @@
         <div class="row">
             <div class="col-sm-7 col-md-9">
                 <div class="mb-2">
-                    <b-button v-if="btnCriar" @click="create()" variant="primary" size="sm"><i class="fas fa-plus-circle"></i> Cadastrar</b-button>
+                    <slot name="botaoCriar">
+                        <b-button v-if="btnCriar" @click="create()" variant="primary" size="sm"><i class="fas fa-plus-circle"></i> Cadastrar</b-button>
+                    </slot>
+                    
                     <b-dropdown v-if="btnExportar" variant="primary" size="sm">
                         <template v-slot:button-content>
                             <i class="fas fa-download"></i> Exportar

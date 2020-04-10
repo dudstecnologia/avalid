@@ -13,5 +13,8 @@ Route::middleware('auth')->group( function () {
         Route::resource('user', 'UserController');
         Route::get('user-datatable', 'UserController@datatable')->name('user-datatable');
         Route::get('user-alterarstatus/{id}', 'UserController@alterarStatus')->name('user-alterarstatus');
+
+        Route::resource('avaliacao', 'AvaliacaoController');
+        Route::get('avaliacao-datatable', 'AvaliacaoController@datatable')->name('avaliacao-datatable');
     });
 });
