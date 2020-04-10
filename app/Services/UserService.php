@@ -3,11 +3,20 @@
 namespace App\Services;
 
 use App\User;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Throwable;
 
 class UserService
 {
+    public static function admin() {
+        if (Auth::user()) {
+            return Auth::user()->admin;
+        }
+
+        return false;
+    }
+
     public static function show($id)
     {
         try {

@@ -8,7 +8,7 @@
 
             <b-collapse id="nav-collapse" is-nav>
                 <b-navbar-nav class="ml-auto">
-                    <b-nav-item-dropdown text="Cadastro" right>
+                    <b-nav-item-dropdown v-if="$page.auth.admin" text="Cadastro" right>
                         <b-dropdown-item>
                             <inertia-link :href="route('admin.user.index')">Usuário</inertia-link>
                         </b-dropdown-item>
@@ -17,7 +17,7 @@
                         </b-dropdown-item>
                     </b-nav-item-dropdown>
 
-                    <b-nav-item-dropdown text="Configurações" right>
+                    <b-nav-item-dropdown v-if="$page.auth.admin" text="Configurações" right>
                         <b-dropdown-item href="#">E-mail</b-dropdown-item>
                     </b-nav-item-dropdown>
 

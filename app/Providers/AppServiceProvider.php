@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Session;
 use Inertia\Inertia;
@@ -40,5 +41,14 @@ class AppServiceProvider extends ServiceProvider
                     : (object) [];
             },
         ]);
+
+        Inertia::share('auth', function () {
+            if (Auth::user()) {
+                return [
+                    'name' => Auth::user()->name,
+                    'admin' => Auth::user()->admin,
+                ];
+            }
+        });
     }
 }
