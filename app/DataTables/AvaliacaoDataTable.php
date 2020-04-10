@@ -21,7 +21,34 @@ class AvaliacaoDataTable extends DataTable
     {
         return datatables()
             ->eloquent($query)
-            ->addColumn('action', 'avaliacao.action');
+            ->addColumn('action', function ($avaliacao) {
+                return [
+                    [
+                        'titulo' => 'Editar',
+                        'classe' => 'fa fa-edit',
+                        'funcao' => 'editarAvaliacao',
+                        'id' => $avaliacao->id
+                    ],
+                    [
+                        'titulo' => 'Alterar Status',
+                        'classe' => 'fa fa-toggle-on',
+                        'funcao' => 'alterarStatus',
+                        'id' => $avaliacao->id
+                    ],
+                    [
+                        'titulo' => 'Excluir',
+                        'classe' => 'fa fa-trash',
+                        'funcao' => 'excluirAvaliacao',
+                        'id' => $avaliacao->id
+                    ]
+                ];
+            })
+            ->addColumn('perguntas', function($avaliacao) {
+                return $avaliacao->questoes->count();
+            })
+            ->editColumn('status', function ($avaliacao) {
+                return $avaliacao->status ? 'Ativa' : 'Inativa';
+            });
     }
 
     /**
@@ -32,7 +59,7 @@ class AvaliacaoDataTable extends DataTable
      */
     public function query(Avaliacao $model)
     {
-        return $model->newQuery();
+        return $model->select('id', 'titulo', 'status');
     }
 
     /**
@@ -63,7 +90,8 @@ class AvaliacaoDataTable extends DataTable
                   ->printable(false)
                   ->width(60)
                   ->addClass('text-center'),
-            Column::make('titulo'),
+            Column::make('titulo')->title('Título'),
+            Column::make('perguntas')->title('N° de Perguntas'),
             Column::make('status')
         ];
     }

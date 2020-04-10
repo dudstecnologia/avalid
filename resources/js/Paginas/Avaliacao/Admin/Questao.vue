@@ -40,7 +40,6 @@
                             </span>
                         </div>
                         <div class="col-md-3 text-right">
-                            <b-button variant="secondary" size="sm"><i class="fas fa-copy"></i></b-button>
                             <b-button variant="danger" size="sm"><i class="fas fa-trash"></i></b-button>
                         </div>
                     </div>
@@ -52,6 +51,9 @@
 
 <script>
 export default {
+    props: [
+        'pQuestoes'
+    ],
     data () {
         return {
             indice: 0,
@@ -60,13 +62,18 @@ export default {
                 { value: 'multipla', text: 'Múltipla Escolha' },
                 { value: 'disertativa', text: 'Disertativa' },
             ],
-            questoes: []
+            questoes: [],
+            obrigatoria: [
+                { text: 'Obrigatória', value: 1 }
+            ]
         }
+    },
+    mounted() {
+        this.setValoresIniciais()
     },
     methods: {
         addQuestao() {
-            this.questoes.push({ 
-                // indice: indice++,
+            this.questoes.push({
                 pergunta: '',
                 tipo: this.tipo,
                 range: {
@@ -75,6 +82,19 @@ export default {
                 },
                 obrigatoria: true
             })
+        },
+        setValoresIniciais() {
+            if (this.pQuestoes) {
+                this.questoes = this.pQuestoes.map(q => {
+                    return {
+                        id: q.id,
+                        pergunta: q.pergunta,
+                        tipo: q.tipo,
+                        range: q.range,
+                        obrigatoria: q.obrigatoria ? true : false
+                    }
+                })
+            }
         }
     },
     watch: {

@@ -10,16 +10,14 @@ use Throwable;
 
 class AvaliacaoService
 {
-    /*
     public static function show($id)
     {
         try {
-            return User::findOrFail($id);
+            return Avaliacao::findOrFail($id);
         } catch (Throwable $th) {
             return null;
         }
     }
-    */
 
     public static function store($request)
     {
@@ -43,23 +41,33 @@ class AvaliacaoService
             );
         }
     }
-    /*
+    
     public static function update($request, $id)
     {
         try {
-            $user = User::findOrFail($id);
-
-            if (isset($request['password'])) {
-                $request['password'] = Hash::make($request['password']);
-            }
-
-            $user->update($request);
-            return $user;
+            DB::beginTransaction();
+            $avaliacao = Avaliacao::findOrFail($id);
+            $avaliacao->update(Arr::except($request, ['questoes']));
+            $questoes = QuestaoService::update($avaliacao, Arr::only($request, ['questoes']));
+            DB::commit();
+            return array(
+                'status' => true,
+                'msg' => 'Avaliação atualizada com sucesso',
+                'avalicao' => $avaliacao->refresh(),
+                'questoes' => $questoes,
+            );
         } catch (Throwable $th) {
-            return null;
+            DB::rollBack();
+            dd($th->getMessage());
+            return array(
+                'status' => false,
+                'msg' => 'Erro ao atualizar a avaliação',
+                'erro' => $th->getMessage(),
+            );
         }
     }
 
+    /*
     public static function alterarStatus($id)
     {
         try {

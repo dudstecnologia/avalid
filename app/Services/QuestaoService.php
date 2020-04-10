@@ -33,23 +33,22 @@ class QuestaoService
             throw new Exception($th->getMessage());
         }
     }
-    /*
-    public static function update($request, $id)
+    
+    public static function update(Avaliacao $avaliacao, $request)
     {
         try {
-            $user = User::findOrFail($id);
-
-            if (isset($request['password'])) {
-                $request['password'] = Hash::make($request['password']);
+            $questoes = array();
+            $avaliacao->questoes()->delete();
+            foreach($request['questoes'] as $q) {
+                $questoes[] = $avaliacao->questoes()->create($q);
             }
-
-            $user->update($request);
-            return $user;
+            return $questoes;
         } catch (Throwable $th) {
-            return null;
+            throw new Exception($th->getMessage());
         }
     }
 
+    /*
     public static function alterarStatus($id)
     {
         try {

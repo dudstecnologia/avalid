@@ -34,7 +34,7 @@
                         </inertia-link>
                     </div>
 
-                    <questao class="mt-2" @altera-questoes="alteraQuestoes" />
+                    <questao :pQuestoes="questoes" class="mt-2" @altera-questoes="alteraQuestoes" />
 
                     <div v-if="form.questoes && form.questoes.length > 1" class="text-right mb-3">
                         <b-button type="submit" variant="primary">Salvar</b-button>
@@ -55,6 +55,10 @@ export default {
     components: {
         Questao
     },
+    props: [
+        'avaliacao',
+        'questoes'
+    ],
     data() {
         return {
             status: [
@@ -62,17 +66,20 @@ export default {
             	{ value: 0, text: 'Inativa' },
             ],
             form: {},
-            idAvaliacao: null,
+            idAvaliacao: this.avaliacao ? this.avaliacao.id : null,
         }
     },
     mounted() {
         this.limparForm()
+        if (this.avaliacao) {
+            this.form = this.avaliacao
+        }
     },
     methods: {
         salvar() {
             if (this.form.questoes.length > 0) {
                 if (this.idAvaliacao) {
-                    // this.$inertia.put(this.route('admin.user.update', this.idUsuario), this.form)
+                    this.$inertia.put(this.route('admin.avaliacao.update', this.idAvaliacao), this.form)
                 } else {
                     this.$inertia.post(this.route('admin.avaliacao.store'), this.form)
                 }

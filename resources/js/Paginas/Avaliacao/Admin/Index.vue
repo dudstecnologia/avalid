@@ -21,7 +21,7 @@
                         </inertia-link>
                     </span>
 
-                        <!-- <span slot-scope="{ actions }">
+                        <span slot-scope="{ actions }">
                             <b-dropdown id="dropdown-left" size="sm" text="Ações" variant="primary" class="m-2">
                                 <b-dropdown-item href="#" v-for="(action, index) in actions"
                                     :key="index"
@@ -31,15 +31,15 @@
                                 {{ action.titulo }}
                                 </b-dropdown-item>
                             </b-dropdown>
-                        </span> -->
+                        </span>
 
-                        <!-- <span slot="admin" slot-scope="{ data }">
-                            <b-badge :variant="data == 'Administrador' ? 'info' : 'secondary'">{{ data }}</b-badge>
+                        <span slot="perguntas" slot-scope="{ data }">
+                            <b-badge variant="info">{{ data }}</b-badge>
                         </span>
 
                         <span slot="status" slot-scope="{ data }">
-                            <b-badge :variant="data == 'Ativo' ? 'success' : 'danger'">{{ data }}</b-badge>
-                        </span> -->
+                            <b-badge :variant="data == 'Ativa' ? 'success' : 'danger'">{{ data }}</b-badge>
+                        </span>
 
                 </datatable-flex>
             </div>
@@ -68,7 +68,11 @@ export default {
         }
     },
     methods: {
-        formCadastro(id = null) {
+        editarAvaliacao(id) {
+            console.log(id)
+            this.$inertia.visit(this.route('admin.avaliacao.show', id), {
+                method: 'get'
+            })
             // this.$refs.modalUsuario.idUsuario = id
             // this.$refs.modalUsuario.exibeModal = true
         },

@@ -48,7 +48,16 @@ class AvaliacaoController extends Controller
 
     public function show($id)
     {
-        //
+        $avaliacao = AvaliacaoService::show($id);
+
+        if ($avaliacao) {
+            return Inertia::render('Avaliacao/Admin/Form', [
+                'avaliacao' => $avaliacao,
+                'questoes' => $avaliacao->questoes
+            ]);
+        }
+
+        return Redirect::back()->with('error', 'Erro ao selecionar a Avaliação');
     }
 
     public function edit($id)
@@ -56,9 +65,15 @@ class AvaliacaoController extends Controller
         //
     }
 
-    public function update(Request $request, $id)
+    public function update(AvaliacaoRequest $request, $id)
     {
-        //
+        $avaliacao = AvaliacaoService::update($request->all(), $id);
+		
+		if ($avaliacao['status']) {
+			return Redirect::route('admin.avaliacao.index')->with('success', $avaliacao['msg']);
+		}
+		
+		return Redirect::back()->with('error', $avaliacao['msg']);
     }
 
     public function destroy($id)
