@@ -19,7 +19,7 @@
 				<div class="col-md-6">
 					<b-form-group label="Senha" label-for="password">
 						<b-form-input id="password" type="password" v-model="form.password"
-						:state="$page.errors.password && $page.errors.password.lenght > 0" placeholder="Email">
+						:state="$page.errors.password && $page.errors.password.lenght > 0" placeholder="Senha">
 						</b-form-input>
 						<b-form-invalid-feedback v-if="$page.errors.password"> {{ $page.errors.password[0] }} </b-form-invalid-feedback>
 					</b-form-group>
@@ -28,7 +28,7 @@
 				<div class="col-md-6">
 					<b-form-group label="Confirmar Senha" label-for="password_confirmation">
 						<b-form-input id="password_confirmation" type="password" v-model="form.password_confirmation"
-						:state="$page.errors.password_confirmation && $page.errors.password_confirmation.lenght > 0" placeholder="Email">
+						:state="$page.errors.password_confirmation && $page.errors.password_confirmation.lenght > 0" placeholder="Confirmar Senha">
 						</b-form-input>
 						<b-form-invalid-feedback v-if="$page.errors.password_confirmation"> {{ $page.errors.password_confirmation[0] }} </b-form-invalid-feedback>
 					</b-form-group>

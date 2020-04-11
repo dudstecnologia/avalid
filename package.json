@@ -29,7 +29,9 @@
         "@inertiajs/inertia-vue": "^0.1.2",
         "bootstrap-vue": "^2.7.0",
         "moment": "^2.24.0",
+        "vue-advanced-cropper": "^0.16.1",
         "vue-axios": "^2.1.5",
+        "vue-crop": "^1.0.1",
         "vue-meta": "^2.3.3",
         "vue-sweetalert2": "^3.0.3"
     }

@@ -21,7 +21,7 @@ Vue.use(VueMeta)
 Vue.use(InertiaApp)
 Vue.use(BootstrapVue)
 Vue.use(VueSweetalert2)
-Vue.use(VueAxios, axios);
+Vue.use(VueAxios, axios)
 
 Vue.component('datatable-flex', DatatableFlex)
 

@@ -17,6 +17,10 @@
                         </b-dropdown-item>
                     </b-nav-item-dropdown>
 
+                    <b-nav-item>
+                        <inertia-link class="link-simples" v-if="!$page.auth.admin" :href="route('funcionario.user.index')">Perfil</inertia-link>
+                    </b-nav-item>
+
                     <b-nav-item-dropdown v-if="$page.auth.admin" text="Configurações" right>
                         <b-dropdown-item href="#">E-mail</b-dropdown-item>
                     </b-nav-item-dropdown>
@@ -55,8 +59,12 @@ export default {
         color: black;
     }
 
-    .dropdown-item a:hover {
+    .dropdown-item a:hover, .nav-item a:hover {
         text-decoration: none;
         color: #757575;
+    }
+
+    .link-simples {
+        color: rgba(255, 255, 255, 0.5);
     }
 </style>

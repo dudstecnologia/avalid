@@ -25,5 +25,6 @@ Route::middleware('auth')->group( function () {
         Route::get('verifica-avaliacao', 'AvaliacaoFuncionarioController@verificaAvaliacao')->name('verifica-avaliacao');
         Route::get('lista-avaliados', 'AvaliacaoFuncionarioController@listaAvaliados')->name('lista-avaliados');
         Route::post('avaliacao', 'AvaliacaoFuncionarioController@store')->name('avaliacao-store');
+        Route::resource('user', 'UserController');
     });
 });

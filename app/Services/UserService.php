@@ -5,6 +5,7 @@ namespace App\Services;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Throwable;
 
 class UserService
@@ -86,5 +87,42 @@ class UserService
                 'erro' => $th->getMessage()
             );
         }
+    }
+
+    public static function updateUserFuncionario($request)
+    {
+        try {
+            if (isset($request['foto']) && $request['foto']) {
+                $request['foto'] = self::uploadImagem($request['foto']);
+            } else {
+                unset($request['foto']);
+            }
+
+            $request['password'] = Hash::make($request['password']);
+
+            auth()->user()->update($request);
+
+            return array(
+                'status' => true,
+                'msg' => 'Dados de perfil atualizados com sucesso'
+            );
+        } catch (Throwable $th) {
+            dd($th->getMessage());
+            return array(
+                'status' => false,
+                'msg' => 'Erro ao atualizar os dados do perfil',
+                'erro' => $th->getMessage()
+            );
+        }
+    }
+
+    public static function uploadImagem($imgBase64)
+    {
+        $pasta =  '/img/';
+        $nomeImagem = auth()->user()->id . '.png';
+        $imagem = substr($imgBase64, strpos($imgBase64, ',') + 1);
+        $status = file_put_contents(public_path() . $pasta . $nomeImagem, base64_decode($imagem));
+        
+        return $status ? $pasta . $nomeImagem : null;
     }
 }
