@@ -8,7 +8,8 @@
                     <div class="text">
                         <div class="text-truncate">{{ a.name }}</div>
                     </div>
-                    <b-button variant="primary" size="sm" @click="abrirAvaliacao(a)">Avaliar</b-button>
+                    <i v-if="a.avaliado" class="fas fa-check-double"></i>
+                    <b-button v-else variant="primary" size="sm" @click="abrirAvaliacao(a)">Avaliar</b-button>
 				</div>
             </div>
         </div>
@@ -18,7 +19,7 @@
             <h4 class="text-center"> </h4>
         </b-overlay>
     </div>
-    <form-avaliacao ref="modalAvaliacao" :avaliacaoPeriodo="avaliacaoPeriodo" :avaliacao="avaliacao" :questoes="questoes"></form-avaliacao>
+    <form-avaliacao ref="modalAvaliacao" :avaliacaoFuncionario="avaliacaoFuncionario" :avaliacao="avaliacao" :questoes="questoes"></form-avaliacao>
 </span>
 </template>
 
@@ -30,14 +31,15 @@ export default {
     metaInfo: { title: 'Dashboard' },
     layout: Layout,
     props: [
-        'auth'
+        'auth',
+        // 'flash'
     ],
     components: {
         FormAvaliacao
     },
     data () {
         return {
-            avaliacaoPeriodo: null,
+            avaliacaoFuncionario: null,
             avaliacao: null,
             questoes: null,
             buscando: true,
@@ -52,7 +54,7 @@ export default {
             this.axios.get(this.route('funcionario.verifica-avaliacao'))
                 .then(({data}) => {
                     this.buscando = false
-                    this.avaliacaoPeriodo = data.avaliacaoPeriodo
+                    this.avaliacaoFuncionario = data.avaliacaoFuncionario
                     this.avaliacao = data.avaliacao
                     this.questoes = data.questoes
                     this.listarAvaliados()
@@ -85,6 +87,26 @@ export default {
         abrirAvaliacao(avaliado) {
             this.$refs.modalAvaliacao.avaliado = avaliado
             this.$refs.modalAvaliacao.exibeModal = true
+        }
+    },
+    watch: {
+        '$page.flash'() {
+            if (this.$page.flash.message) {
+                this.$refs.modalAvaliacao.avaliado = null
+                this.$refs.modalAvaliacao.exibeModal = false
+                this.avaliados = this.avaliados.map(a => {
+                    if (a.id == this.$page.flash.message.avaliado) {
+                        return {
+                            email: a.email,
+                            foto: a.foto,
+                            id: a.id,
+                            name: a.name,
+                            avaliado: true
+                        }
+                    }
+                    return a
+                })
+            }
         }
     }
 }

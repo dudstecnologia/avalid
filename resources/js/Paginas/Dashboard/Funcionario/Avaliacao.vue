@@ -32,7 +32,7 @@
 <script>
 	export default {
         props: [
-            'avaliacaoPeriodo',
+            'avaliacaoFuncionario',
             'avaliacao',
             'questoes'
         ],
@@ -43,35 +43,12 @@
 				avaliado: null,
 			}
 		},
-		mounted() {
-			// this.limparForm()
-		},
 		methods: {
 			salvar() {
+                this.form.avaliacaoFuncionario = this.avaliacaoFuncionario.id
+                this.form.avaliado = this.avaliado.id
 				this.$inertia.post(this.route('funcionario.avaliacao-store'), this.form)
 			},
-			// limparForm() {
-			// 	this.form =  {
-			// 			name: '',
-			// 			email: '',
-			// 			password: '',
-			// 			password_confirmation: '',
-			// 			admin: 0,
-			// 			status: 0,
-			// 		}
-			// },
-			getDadosUsuario() {
-				this.axios.get(this.route('admin.user.show', this.idUsuario))
-					.then(({data}) => {
-						this.form = data
-					})
-					.catch(err => {
-						this.$swal({
-							icon: 'error',
-							text: 'Erro ao buscar os dados do usuário'
-						})
-					})
-			}
         },
         computed: {
             tituloModal() {
@@ -85,7 +62,6 @@
 		watch: {
 			exibeModal() {
 				if (!this.exibeModal) {
-					this.idUsuario = null
 					this.form = {}
 				}
 				// if (this.idUsuario) {

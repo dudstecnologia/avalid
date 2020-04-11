@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Funcionario;
 
 use App\Http\Controllers\Controller;
 use App\Services\AvaliacaoFuncionarioService;
+use App\Services\AvaliacaoRespostaService;
 use App\Services\UserService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class AvaliacaoFuncionarioController extends Controller
 {
@@ -25,6 +27,14 @@ class AvaliacaoFuncionarioController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
+        $questoes = AvaliacaoRespostaService::store($request);
+
+        if ($questoes['status']) {
+            return Redirect::route('dashboard')
+                        ->with('success', $questoes['msg'])
+                        ->withMessage($questoes['avaliado']);
+		}
+		
+		return Redirect::back()->with('error', $questoes['msg']);
     }
 }
