@@ -22,4 +22,9 @@ class AvaliacaoFuncionarioController extends Controller
 
         return $avaliados['status'] ? response($avaliados, 200) : response($avaliados, 401);
     }
+
+    public function store(Request $request)
+    {
+        dd($request->all());
+    }
 }

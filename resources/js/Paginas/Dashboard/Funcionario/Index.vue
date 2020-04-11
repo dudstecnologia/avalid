@@ -4,11 +4,11 @@
         <div class="row">
             <div v-for="(a, index) in avaliados" :key="index" class="col-md-2">
                 <div class="box-part text-center">
-                    <b-img :src="a.src || '/img/avatar.png'" width="75" height="75" fluid rounded="circle"></b-img>
+                    <b-img :src="a.foto || '/img/avatar.png'" width="75" height="75" fluid rounded="circle"></b-img>
                     <div class="text">
                         <div class="text-truncate">{{ a.name }}</div>
                     </div>
-                    <b-button variant="primary" size="sm" @click="abrirAvaliacao(a.id)">Avaliar</b-button>
+                    <b-button variant="primary" size="sm" @click="abrirAvaliacao(a)">Avaliar</b-button>
 				</div>
             </div>
         </div>
@@ -18,11 +18,13 @@
             <h4 class="text-center"> </h4>
         </b-overlay>
     </div>
+    <form-avaliacao ref="modalAvaliacao" :avaliacaoPeriodo="avaliacaoPeriodo" :avaliacao="avaliacao" :questoes="questoes"></form-avaliacao>
 </span>
 </template>
 
 <script>
 import Layout from '../../../Componentes/Layout'
+import FormAvaliacao from './Avaliacao'
 
 export default {
     metaInfo: { title: 'Dashboard' },
@@ -30,8 +32,12 @@ export default {
     props: [
         'auth'
     ],
+    components: {
+        FormAvaliacao
+    },
     data () {
         return {
+            avaliacaoPeriodo: null,
             avaliacao: null,
             questoes: null,
             buscando: true,
@@ -46,6 +52,7 @@ export default {
             this.axios.get(this.route('funcionario.verifica-avaliacao'))
                 .then(({data}) => {
                     this.buscando = false
+                    this.avaliacaoPeriodo = data.avaliacaoPeriodo
                     this.avaliacao = data.avaliacao
                     this.questoes = data.questoes
                     this.listarAvaliados()
@@ -76,7 +83,8 @@ export default {
                 })
         },
         abrirAvaliacao(avaliado) {
-            console.log(avaliado)
+            this.$refs.modalAvaliacao.avaliado = avaliado
+            this.$refs.modalAvaliacao.exibeModal = true
         }
     }
 }

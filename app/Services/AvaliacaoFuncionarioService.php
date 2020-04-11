@@ -36,6 +36,7 @@ class AvaliacaoFuncionarioService
 
             return array(
                 'status' => true,
+                'avaliacaoPeriodo' => $avfunc,
                 'avaliacao' => $avfunc->avaliacao,
                 'questoes' => $avfunc->avaliacao->questoes
             );
