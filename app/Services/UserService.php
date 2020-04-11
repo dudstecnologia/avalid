@@ -63,8 +63,28 @@ class UserService
             $user = User::findOrFail($id);
             $user->update(['status' => $user->status ? false : true]);
             return $user;
-        } catch (Throwable $e) {
+        } catch (Throwable $th) {
             return null;
+        }
+    }
+
+    public static function listarAvaliados()
+    {
+        try {
+            $avaliados = User::whereStatus(true)
+                            ->whereAdmin(false)
+                            ->whereNotIn('id', [Auth::user()->id])
+                            ->get();
+            return array(
+                'status' => true,
+                'avaliados' => $avaliados
+            );
+        } catch (Throwable $th) {
+            return array(
+                'status' => false,
+                'msg' => 'Erro ao listar os avaliados',
+                'erro' => $th->getMessage()
+            );
         }
     }
 }

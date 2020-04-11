@@ -15,4 +15,9 @@ class Avaliacao extends Model
     {
         return $this->hasMany(Questao::class);
     }
+
+    public function avaliacaoFuncionarios()
+    {
+        return $this->hasMany(AvaliacaoFuncionario::class);
+    }
 }

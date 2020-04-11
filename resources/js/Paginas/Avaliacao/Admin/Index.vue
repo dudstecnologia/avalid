@@ -13,7 +13,7 @@
                     classe="table table-bordered table-striped"
                     :url="this.route('admin.avaliacao-datatable')"
                     ordem="1"
-                    @create="formCadastro()">
+                    :btnCriar="false">
 
                     <span slot="botaoCriar">
                         <inertia-link :href="route('admin.avaliacao.create')">
@@ -43,14 +43,12 @@
 </template>
 
 <script>
+import moment from 'moment'
 import Layout from '../../../Componentes/Layout'
 
 export default {
-    metaInfo: { title: 'Usuários' },
+    metaInfo: { title: 'Avaliação' },
     layout: Layout,
-    props: {
-        users: Object,
-    },
     data () {
         return {
 
@@ -60,34 +58,33 @@ export default {
         editarAvaliacao(id) {
             this.$inertia.visit(this.route('admin.avaliacao.show', id), { method: 'get' })
         },
-        liberarAvaliacao(user) {
-            console.log(user)
-            // this.$swal({
-            //     text: "Deseja mesmo alterar o status?",
-            //     icon: 'question',
-            //     showCancelButton: true,
-            //     confirmButtonColor: '#3085d6',
-            //     cancelButtonColor: '#d33',
-            //     confirmButtonText: 'Sim',
-            //     cancelButtonText: 'Não'
-            // }).then((result) => {
-            //     if (result.value) {
-            //         this.axios.get(this.route('admin.user-alterarstatus', user))
-            //             .then(({data}) => {
-            //                 this.$refs.tabelaUsuarios.atualizar()
-            //                 this.$swal({
-            //                     icon: 'success',
-            //                     text: 'Status alterado com sucesso'
-            //                 })
-            //             })
-            //             .catch(err => {
-            //                 this.$swal({
-            //                     icon: 'error',
-            //                     text: 'Erro ao alterar o status do usuário'
-            //                 })
-            //             })
-            //     }
-            // })
+        liberarAvaliacao(av) {
+            // let periodo = moment().subtract(30, 'days').format('MM/YYYY')
+            this.$swal({
+                text: 'Deseja mesmo liberar a avaliação para os funcionários?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim',
+                cancelButtonText: 'Não'
+            }).then((result) => {
+                if (result.value) {
+                    this.axios.get(this.route('admin.avaliacao-liberar', av))
+                        .then(({data}) => {
+                            this.$swal({
+                                icon: 'success',
+                                text: 'Avaliação liberada com sucesso'
+                            })
+                        })
+                        .catch(err => {
+                            this.$swal({
+                                icon: 'error',
+                                text: 'Erro ao liberar a avaliação'
+                            })
+                        })
+                }
+            })
         },
         acoesDataTable(value)
         {

@@ -17,9 +17,12 @@ Route::middleware('auth')->group( function () {
 
         Route::resource('avaliacao', 'AvaliacaoController');
         Route::get('avaliacao-datatable', 'AvaliacaoController@datatable')->name('avaliacao-datatable');
+        
+        Route::get('avaliacao-liberar/{id}', 'AvaliacaoController@liberarAvaliacao')->name('avaliacao-liberar');
     });
 
     Route::middleware('funcionario')->namespace('Funcionario')->prefix('funcionario')->name('funcionario.')->group( function () {
-
+        Route::get('verifica-avaliacao', 'AvaliacaoFuncionarioController@verificaAvaliacao')->name('verifica-avaliacao');
+        Route::get('lista-avaliados', 'AvaliacaoFuncionarioController@listaAvaliados')->name('lista-avaliados');
     });
 });

@@ -28,6 +28,7 @@
         "@inertiajs/inertia": "^0.1.7",
         "@inertiajs/inertia-vue": "^0.1.2",
         "bootstrap-vue": "^2.7.0",
+        "moment": "^2.24.0",
         "vue-axios": "^2.1.5",
         "vue-meta": "^2.3.3",
         "vue-sweetalert2": "^3.0.3"

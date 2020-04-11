@@ -66,17 +66,4 @@ class AvaliacaoService
             );
         }
     }
-
-    /*
-    public static function alterarStatus($id)
-    {
-        try {
-            $user = User::findOrFail($id);
-            $user->update(['status' => $user->status ? false : true]);
-            return $user;
-        } catch (Throwable $e) {
-            return null;
-        }
-    }
-    */
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\DataTables\AvaliacaoDataTable;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AvaliacaoRequest;
+use App\Services\AvaliacaoFuncionarioService;
 use App\Services\AvaliacaoService;
 use App\Services\DatatableService;
 use Illuminate\Http\Request;
@@ -69,5 +70,12 @@ class AvaliacaoController extends Controller
 		}
 		
 		return Redirect::back()->with('error', $avaliacao['msg']);
+    }
+
+    public function liberarAvaliacao($id)
+    {
+        $avaliacao = AvaliacaoFuncionarioService::store($id);
+
+		return $avaliacao['status'] ? response($avaliacao, 200) : response($avaliacao, 401);
     }
 }
