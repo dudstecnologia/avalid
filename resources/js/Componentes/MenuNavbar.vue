@@ -2,7 +2,9 @@
 <span>
     <b-navbar toggleable="lg" type="dark" variant="dark">
         <div class="container">
-            <b-navbar-brand href="#">AvaliD</b-navbar-brand>
+            <inertia-link :href="route('dashboard')">
+                <b-navbar-brand>AvaliD</b-navbar-brand>
+            </inertia-link>
 
             <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
