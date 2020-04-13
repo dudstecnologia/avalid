@@ -15,7 +15,21 @@ export default {
     ],
     data () {
         return {
-
+            avaliacaoFuncionario: []
+        }
+    },
+    mounted() {
+        this.listarAvaliacoes()
+    },
+    methods: {
+        listarAvaliacoes() {
+            this.axios.get(this.route('admin.avaliacao-funcionario-listar'))
+                .then(({data}) => {
+                    console.log(data)
+                })
+                .catch(err => {
+                    console.log(err)
+                })
         }
     }
 }

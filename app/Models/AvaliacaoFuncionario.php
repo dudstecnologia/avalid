@@ -11,6 +11,10 @@ class AvaliacaoFuncionario extends Model
         'avaliacao_id'
     ];
 
+    protected $dates = [
+        'periodo',
+    ];
+
     public function avaliacao()
     {
         return $this->belongsTo(Avaliacao::class);

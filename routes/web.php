@@ -19,6 +19,8 @@ Route::middleware('auth')->group( function () {
         Route::get('avaliacao-datatable', 'AvaliacaoController@datatable')->name('avaliacao-datatable');
         
         Route::get('avaliacao-liberar/{id}', 'AvaliacaoController@liberarAvaliacao')->name('avaliacao-liberar');
+
+        Route::get('avaliacao-funcionario-listar', 'AvaliacaoFuncionarioController@listarAvaliacoes')->name('avaliacao-funcionario-listar');
     });
 
     Route::middleware('funcionario')->namespace('Funcionario')->prefix('funcionario')->name('funcionario.')->group( function () {

@@ -12,16 +12,27 @@ use Throwable;
 
 class AvaliacaoFuncionarioService
 {
-    /*
-    public static function show($id)
+    public static function listarAvaliacoesAdmin()
     {
         try {
-            return Avaliacao::findOrFail($id);
+            $avfunc = AvaliacaoFuncionario::whereDate('periodo', '>=', Carbon::now()->modify('-4 months'))
+                        ->select('id', 'periodo', 'avaliacao_id', 'status')
+                        ->latest()
+                        ->get();
+
+            return array(
+                'status' => true,
+                'avaliacaoFuncionario' => $avfunc
+            );
         } catch (Throwable $th) {
-            return null;
+            return array(
+                'status' => false,
+                'msg' => 'Erro ao listar as avaliações',
+                'erro' => $th->getMessage()
+            );
         }
     }
-    */
+
     public static function verificaAvaliacao()
     {
         try {
@@ -85,31 +96,4 @@ class AvaliacaoFuncionarioService
             );
         }
     }
-    
-    /*
-    public static function update($request, $id)
-    {
-        try {
-            DB::beginTransaction();
-            $avaliacao = Avaliacao::findOrFail($id);
-            $avaliacao->update(Arr::except($request, ['questoes']));
-            $questoes = QuestaoService::update($avaliacao, Arr::only($request, ['questoes']));
-            DB::commit();
-            return array(
-                'status' => true,
-                'msg' => 'Avaliação atualizada com sucesso',
-                'avalicao' => $avaliacao->refresh(),
-                'questoes' => $questoes,
-            );
-        } catch (Throwable $th) {
-            DB::rollBack();
-            dd($th->getMessage());
-            return array(
-                'status' => false,
-                'msg' => 'Erro ao atualizar a avaliação',
-                'erro' => $th->getMessage(),
-            );
-        }
-    }
-    */
 }
