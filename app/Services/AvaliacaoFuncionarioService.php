@@ -15,14 +15,22 @@ class AvaliacaoFuncionarioService
     public static function listarAvaliacoesAdmin()
     {
         try {
-            $avfunc = AvaliacaoFuncionario::whereDate('periodo', '>=', Carbon::now()->modify('-4 months'))
-                        ->select('id', 'periodo', 'avaliacao_id', 'status')
-                        ->latest()
+            $avfunc = AvaliacaoFuncionario::join('avaliacaos', 'avaliacaos.id', 'avaliacao_funcionarios.avaliacao_id')
+                        ->whereDate('periodo', '>=', Carbon::now()->modify('-4 months'))
+                        ->select(
+                            'avaliacao_funcionarios.id as avaliacao_funcionario', 
+                            'avaliacao_funcionarios.periodo as periodo', 
+                            'avaliacao_funcionarios.avaliacao_id as avaliacao',
+                            'avaliacaos.titulo as titulo_avaliacao',
+                            'avaliacao_funcionarios.status as status',
+                            DB::raw('(select COUNT(questaos.id) from questaos where questaos.avaliacao_id = avaliacaos.id) questoes')
+                        )
+                        ->orderBy('avaliacao_funcionario', 'DESC')
                         ->get();
 
             return array(
                 'status' => true,
-                'avaliacaoFuncionario' => $avfunc
+                'avaliacoesFuncionarios' => $avfunc
             );
         } catch (Throwable $th) {
             return array(
