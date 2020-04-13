@@ -70,7 +70,7 @@ export default {
                 })
         },
         listarAvaliados() {
-            this.axios.get(this.route('funcionario.lista-avaliados'))
+            this.axios.get(this.route('funcionario.lista-avaliados', this.avaliacaoFuncionario.id))
                 .then(({data}) => {
                     this.avaliados = data.avaliados
                 })

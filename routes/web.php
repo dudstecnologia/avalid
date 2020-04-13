@@ -23,7 +23,7 @@ Route::middleware('auth')->group( function () {
 
     Route::middleware('funcionario')->namespace('Funcionario')->prefix('funcionario')->name('funcionario.')->group( function () {
         Route::get('verifica-avaliacao', 'AvaliacaoFuncionarioController@verificaAvaliacao')->name('verifica-avaliacao');
-        Route::get('lista-avaliados', 'AvaliacaoFuncionarioController@listaAvaliados')->name('lista-avaliados');
+        Route::get('lista-avaliados/{avaliacao_funcionario}', 'AvaliacaoFuncionarioController@listaAvaliados')->name('lista-avaliados');
         Route::post('avaliacao', 'AvaliacaoFuncionarioController@store')->name('avaliacao-store');
         Route::resource('user', 'UserController');
     });

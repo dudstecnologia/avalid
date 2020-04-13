@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\AvaliacaoResposta;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -69,13 +70,31 @@ class UserService
         }
     }
 
-    public static function listarAvaliados()
+    public static function listarAvaliados($avaliacao_funcionario)
     {
         try {
             $avaliados = User::whereStatus(true)
                             ->whereAdmin(false)
                             ->whereNotIn('id', [Auth::user()->id])
+                            ->select('id', 'name', 'foto')
                             ->get();
+
+            $avaliados = $avaliados->map(function($a) use($avaliacao_funcionario) {
+
+                $a['avaliado'] = false;
+                
+                $verificaAvaliacao = AvaliacaoResposta::whereAvaliacaoFuncionarioId($avaliacao_funcionario)
+                                        ->whereAvaliadorId(Auth::user()->id)
+                                        ->whereAvaliadoId($a->id)
+                                        ->count();
+
+                if ($verificaAvaliacao > 0) {
+                    $a['avaliado'] = true;
+                }
+
+                return $a;
+            });
+
             return array(
                 'status' => true,
                 'avaliados' => $avaliados

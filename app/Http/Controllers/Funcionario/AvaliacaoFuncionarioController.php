@@ -18,9 +18,9 @@ class AvaliacaoFuncionarioController extends Controller
         return $avfunc['status'] ? response($avfunc, 200) : response($avfunc, 401);
     }
 
-    public function listaAvaliados()
+    public function listaAvaliados($avaliacao_funcionario)
     {
-        $avaliados = UserService::listarAvaliados();
+        $avaliados = UserService::listarAvaliados($avaliacao_funcionario);
 
         return $avaliados['status'] ? response($avaliados, 200) : response($avaliados, 401);
     }
