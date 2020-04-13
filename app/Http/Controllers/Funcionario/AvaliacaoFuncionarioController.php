@@ -15,14 +15,14 @@ class AvaliacaoFuncionarioController extends Controller
     {
         $avfunc = AvaliacaoFuncionarioService::verificaAvaliacao();
 
-        return $avfunc['status'] ? response($avfunc, 200) : response($avfunc, 401);
+        return $avfunc['status'] ? response($avfunc, 200) : response($avfunc, 400);
     }
 
     public function listaAvaliados($avaliacao_funcionario)
     {
         $avaliados = UserService::listarAvaliados($avaliacao_funcionario);
 
-        return $avaliados['status'] ? response($avaliados, 200) : response($avaliados, 401);
+        return $avaliados['status'] ? response($avaliados, 200) : response($avaliados, 400);
     }
 
     public function store(Request $request)

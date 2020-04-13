@@ -76,6 +76,6 @@ class AvaliacaoController extends Controller
     {
         $avaliacao = AvaliacaoFuncionarioService::store($id);
 
-		return $avaliacao['status'] ? response($avaliacao, 200) : response($avaliacao, 401);
+		return $avaliacao['status'] ? response($avaliacao, 200) : response($avaliacao, 400);
     }
 }

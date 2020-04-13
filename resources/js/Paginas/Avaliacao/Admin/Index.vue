@@ -59,7 +59,6 @@ export default {
             this.$inertia.visit(this.route('admin.avaliacao.show', id), { method: 'get' })
         },
         liberarAvaliacao(av) {
-            // let periodo = moment().subtract(30, 'days').format('MM/YYYY')
             this.$swal({
                 text: 'Deseja mesmo liberar a avaliação para os funcionários?',
                 icon: 'question',
@@ -78,9 +77,13 @@ export default {
                             })
                         })
                         .catch(err => {
+                            let msg = 'Erro ao liberar a avaliação'
+                            if (err.response.data.msg) {
+                                msg = err.response.data.msg
+                            }
                             this.$swal({
                                 icon: 'error',
-                                text: 'Erro ao liberar a avaliação'
+                                text: msg
                             })
                         })
                 }

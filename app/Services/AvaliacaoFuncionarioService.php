@@ -52,10 +52,24 @@ class AvaliacaoFuncionarioService
     public static function store($id)
     {
         try {
+            $mesPassado = Carbon::now()->modify('-1 months');
+
+            $verificaAvaliacao = AvaliacaoFuncionario::whereAvaliacaoId($id)
+                                    ->whereYear('periodo', '=', Carbon::now()->year)
+                                    ->whereMonth('periodo', '=', $mesPassado->month)
+                                    ->count();
+
+            if ($verificaAvaliacao > 0) {
+                return array(
+                    'status' => false,
+                    'msg' => 'Esta avaliação já foi liberada para este período'
+                );
+            }
+
             $avaliacao = Avaliacao::findOrFail($id);
             
             $avaliacao->avaliacaoFuncionarios()->create([
-                'periodo' => Carbon::now()->modify('-1 months')
+                'periodo' => $mesPassado
             ]);
 
             return array(
