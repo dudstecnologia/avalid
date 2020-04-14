@@ -51,7 +51,7 @@ class AvaliacaoRespostaService
         } catch (Throwable $th) {
             DB::rollBack();
             return array(
-                'status' => true,
+                'status' => false,
                 'msg' => 'Erro ao realizar a avaliação',
                 'erro' => $th->getMessage()
             );

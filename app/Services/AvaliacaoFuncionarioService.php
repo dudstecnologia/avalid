@@ -20,7 +20,7 @@ class AvaliacaoFuncionarioService
                         ->select(
                             'avaliacao_funcionarios.id as avaliacao_funcionario', 
                             'avaliacao_funcionarios.periodo as periodo', 
-                            'avaliacao_funcionarios.avaliacao_id as avaliacao',
+                            // 'avaliacao_funcionarios.avaliacao_id as avaliacao',
                             'avaliacaos.titulo as titulo_avaliacao',
                             'avaliacao_funcionarios.status as status',
                             DB::raw('(select COUNT(questaos.id) from questaos where questaos.avaliacao_id = avaliacaos.id) questoes')

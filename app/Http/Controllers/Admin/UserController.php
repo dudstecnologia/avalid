@@ -65,4 +65,11 @@ class UserController extends Controller
         $user = UserService::alterarStatus($id);
         return $user ? response($user, 200) : response('', 401);
     }
+
+    public function listarAvaliados($avaliacao_funcionario)
+    {
+        $retorno = UserService::listarAvaliadosAdmin($avaliacao_funcionario);
+        
+        return $retorno['status'] ? response($retorno, 200) : response($retorno, 400);
+    }
 }

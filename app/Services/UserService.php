@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\AvaliacaoFuncionario;
 use App\Models\AvaliacaoResposta;
 use App\User;
 use Illuminate\Support\Facades\Auth;
@@ -90,6 +91,47 @@ class UserService
 
                 if ($verificaAvaliacao > 0) {
                     $a['avaliado'] = true;
+                }
+
+                return $a;
+            });
+
+            return array(
+                'status' => true,
+                'avaliados' => $avaliados
+            );
+        } catch (Throwable $th) {
+            return array(
+                'status' => false,
+                'msg' => 'Erro ao listar os avaliados',
+                'erro' => $th->getMessage()
+            );
+        }
+    }
+
+    public static function listarAvaliadosAdmin($avaliacao_funcionario)
+    {
+        try {
+
+            $avFunc = AvaliacaoFuncionario::findOrFail($avaliacao_funcionario);
+            $totalQuestoes = $avFunc->avaliacao->questoes->count();
+
+            $avaliados = User::whereStatus(true)
+                            ->whereAdmin(false)
+                            ->whereDate('created_at', '<=', $avFunc->created_at)
+                            ->select('id', 'name', 'foto')
+                            ->get();
+
+            $avaliados = $avaliados->map(function($a) use($avaliacao_funcionario, $totalQuestoes) {
+
+                $a['totalAvaliados'] = 0;
+                
+                $verificaRespostas = AvaliacaoResposta::whereAvaliacaoFuncionarioId($avaliacao_funcionario)
+                                        ->whereAvaliadorId($a->id)
+                                        ->count();
+
+                if ($verificaRespostas > 0) {
+                    $a['totalAvaliados'] = $verificaRespostas / $totalQuestoes;
                 }
 
                 return $a;

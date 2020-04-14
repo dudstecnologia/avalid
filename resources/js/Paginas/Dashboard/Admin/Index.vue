@@ -61,7 +61,15 @@ export default {
                 })
         },
         listarAvaliados(indice) {
-
+            // console.log(this.avFuncionarios[indice])
+            let af = this.avFuncionarios[indice].avaliacao_funcionario
+            this.axios.get(this.route('admin.avaliados-listar', af))
+                .then(({data}) => {
+                    console.log(data)
+                })
+                .catch(err => {
+                    console.log(err.response)
+                })
         },
         tituloAba(titulo, data) {
             return `${titulo} - ${moment(data).format('MM/YYYY')}`
@@ -70,8 +78,7 @@ export default {
     watch: {
         abaAtiva(v) {
             if (!this.avaliados[v]) {
-                console.log('Vai buscar os avaliados do indice: ' + v)
-                this.avaliados[v] = ['teste']
+                this.listarAvaliados(v)
             }
         }
     }
