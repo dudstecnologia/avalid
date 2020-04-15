@@ -8,6 +8,9 @@
                             <div>
                                 <b-button variant="primary" size="sm">Gerar Relatório</b-button>
                                 <b-button v-if="a.status == 1" variant="danger" size="sm">Finalizar Avaliação</b-button>
+                                <b-form-checkbox v-model="autoRefresh" name="check-button" switch>
+                                    Monitorar
+                                </b-form-checkbox>
                             </div>
 
                             <b-jumbotron class="mt-3 mjumbotron">
@@ -59,11 +62,16 @@ export default {
             abaAtiva: null,
             avFuncionarios: [],
             avaliacaoSelecionada: null,
-            avaliados: []
+            avaliados: [],
+            autoRefresh: false,
+            timer: null
         }
     },
     mounted() {
         this.listarAvaliacoes()
+    },
+    beforeDestroy () {
+        this.pararAtualizador()
     },
     methods: {
         listarAvaliacoes() {
@@ -80,13 +88,14 @@ export default {
                     })
                 })
         },
-        listarAvaliados(indice) {
-            let af = this.avFuncionarios[indice].avaliacao_funcionario
+        listarAvaliados() {
+            let af = this.avFuncionarios[this.abaAtiva].avaliacao_funcionario
             this.axios.get(this.route('admin.avaliados-listar', af))
                 .then(({data}) => {
                     console.log(data)
                     this.avaliados = data.avaliados
                     this.progresso = false
+                    this.iniciarAtualizador()
                 })
                 .catch(err => {
                     this.progresso = false
@@ -98,12 +107,24 @@ export default {
         },
         tituloAba(titulo, data) {
             return `${titulo} - ${moment(data).format('MM/YYYY')}`
+        },
+        iniciarAtualizador() {
+            if (!this.timer) {
+                this.timer = setInterval( () => {
+                    this.listarAvaliados()
+                }, 7000)
+            }
+        },
+        pararAtualizador() {
+            if (this.timer) {
+                clearInterval(this.timer)
+            }
         }
     },
     watch: {
         abaAtiva(v) {
             this.progresso = true
-            this.listarAvaliados(v)
+            this.listarAvaliados()
         }
     }
 }
