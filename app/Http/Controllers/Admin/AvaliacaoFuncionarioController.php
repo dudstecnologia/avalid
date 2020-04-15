@@ -14,4 +14,11 @@ class AvaliacaoFuncionarioController extends Controller
 
 		return $retorno['status'] ? response($retorno, 200) : response($retorno, 400);
     }
+
+    public function finalizarAvaliacao($avaliacao_funcionario)
+    {
+        $retorno = AvaliacaoFuncionarioService::finalizarAvaliacao($avaliacao_funcionario);
+
+        return $retorno['status'] ? response($retorno, 200) : response($retorno, 400);
+    }
 }

@@ -8,7 +8,8 @@ class AvaliacaoFuncionario extends Model
 {
     protected $fillable = [
         'periodo',
-        'avaliacao_id'
+        'avaliacao_id',
+        'status'
     ];
 
     protected $dates = [

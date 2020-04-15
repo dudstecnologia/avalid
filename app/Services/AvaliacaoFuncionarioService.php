@@ -104,4 +104,24 @@ class AvaliacaoFuncionarioService
             );
         }
     }
+
+    public static function finalizarAvaliacao($avaliacao_funcionario)
+    {
+        try {
+            $avFunc = AvaliacaoFuncionario::findOrFail($avaliacao_funcionario);
+            $avFunc->update(['status' => $avFunc->status ? false : true]);
+
+            return array(
+                'status' => true,
+                'msg' => 'Avaliação finalizada com sucesso'
+            );
+        } catch (Throwable $th) {
+            
+            return array(
+                'status' => false,
+                'msg' => 'Erro ao finalizar a avaliação',
+                'erro' => $th->getMessage(),
+            );
+        }
+    }
 }

@@ -3,18 +3,17 @@
         <b-overlay :show="progresso">
             <b-card no-body>
                 <b-tabs card v-model="abaAtiva">
-                    <b-tab v-for="a in avFuncionarios" :key="a.avaliacao_funcionario" :title="tituloAba(a.titulo_avaliacao, a.periodo)">
+                    <b-tab v-for="(a, index) in avFuncionarios" :key="a.avaliacao_funcionario" :title="tituloAba(a.titulo_avaliacao, a.periodo)">
                         <b-card-text>
                             <div>
                                 <b-button variant="primary" size="sm">Gerar Relatório</b-button>
-                                <b-button v-if="a.status == 1" variant="danger" size="sm">Finalizar Avaliação</b-button>
+                                <b-button v-if="a.status == 1" variant="danger" size="sm" @click="finalizarAvaliacao(a.avaliacao_funcionario, index)">Finalizar Avaliação</b-button>
                             </div>
-
                             <b-jumbotron class="mt-3 mjumbotron">
                                 <div class="row">
                                     <div v-for="(u, i) in avaliados" :key="i" class="col-md-2">
                                         <div class="box-part text-center">
-                                            <b-img :src="u.foto || '/padroes/avatar2.png'" width="75" height="75" fluid rounded="circle"></b-img>
+                                            <b-img :src="u.foto || '/padroes/avatar.png'" width="75" height="75" fluid rounded="circle"></b-img>
                                             <div class="box-text">
                                                 <div class="text-truncate">{{ u.name }}</div>
                                             </div>
@@ -89,7 +88,9 @@ export default {
                 .then(({data}) => {
                     this.avaliados = data.avaliados
                     this.progresso = false
-                    this.iniciarAtualizador()
+                    if (this.avFuncionarios[this.abaAtiva].status) {
+                        this.iniciarAtualizador()
+                    }
                 })
                 .catch(err => {
                     this.progresso = false
@@ -98,6 +99,36 @@ export default {
                         text: err.response.data.msg
                     })
                 })
+        },
+        finalizarAvaliacao(avfunc, index) {
+            this.$swal({
+                text: 'Deseja mesmo finalizar a avaliação?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sim',
+                cancelButtonText: 'Não'
+            }).then((result) => {
+                if (result.value) {
+                    this.axios.get(this.route('admin.avaliacao-funcionario-finalizar', avfunc))
+                        .then(({data}) => {
+                            this.avFuncionarios[index].status = 0
+                            this.pararAtualizador()
+                            this.$swal({
+                                icon: 'success',
+                                text: data.msg
+                            })
+                        })
+                        .catch(err => {
+                            this.$swal({
+                                icon: 'error',
+                                text: err.response.data.msg
+                            })
+                        })
+                            
+                        }
+            })
         },
         tituloAba(titulo, data) {
             return `${titulo} - ${moment(data).format('MM/YYYY')}`

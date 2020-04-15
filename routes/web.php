@@ -21,6 +21,7 @@ Route::middleware('auth')->group( function () {
         Route::get('avaliacao-liberar/{id}', 'AvaliacaoController@liberarAvaliacao')->name('avaliacao-liberar');
 
         Route::get('avaliacao-funcionario-listar', 'AvaliacaoFuncionarioController@listarAvaliacoes')->name('avaliacao-funcionario-listar');
+        Route::get('avaliacao-funcionario-finalizar/{avaliacao_funcionario}', 'AvaliacaoFuncionarioController@finalizarAvaliacao')->name('avaliacao-funcionario-finalizar');
         Route::get('avaliados-listar/{avaliacao_funcionario}', 'UserController@listarAvaliados')->name('avaliados-listar');
     });
 
