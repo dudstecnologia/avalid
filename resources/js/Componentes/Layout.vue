@@ -37,3 +37,19 @@ export default {
     }
 }
 </script>
+
+<style>
+.mjumbotron {
+    padding: 10px;
+}
+
+.box-part {
+    background: #FFF;
+    border-radius: 0;
+    padding: 10px 10px;
+}
+
+.box-text {
+    margin: 10px 0px;
+}
+</style>

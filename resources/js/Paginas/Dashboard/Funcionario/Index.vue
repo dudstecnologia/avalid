@@ -4,8 +4,8 @@
         <div class="row">
             <div v-for="(a, index) in avaliados" :key="index" class="col-md-2">
                 <div class="box-part text-center">
-                    <b-img :src="a.foto || '/img/avatar2.png'" width="75" height="75" fluid rounded="circle"></b-img>
-                    <div class="text">
+                    <b-img :src="a.foto || '/padroes/avatar2.png'" width="75" height="75" fluid rounded="circle"></b-img>
+                    <div class="box-text">
                         <div class="text-truncate">{{ a.name }}</div>
                     </div>
                     <i v-if="a.avaliado" class="fas fa-check-double"></i>
@@ -61,12 +61,10 @@ export default {
                 })
                 .catch(err => {
                     this.buscando = false
-                    if (err.response.data) {
-                        this.$swal({
-                            icon: 'error',
-                            text: err.response.data.msg
-                        })
-                    }
+                    this.$swal({
+                        icon: 'error',
+                        text: err.response.data.msg
+                    })
                 })
         },
         listarAvaliados() {
@@ -76,12 +74,10 @@ export default {
                 })
                 .catch(err => {
                     this.buscando = false
-                    if (err.response.data) {
-                        this.$swal({
-                            icon: 'error',
-                            text: err.response.data.msg
-                        })
-                    }
+                    this.$swal({
+                        icon: 'error',
+                        text: err.response.data.msg
+                    })
                 })
         },
         abrirAvaliacao(avaliado) {
@@ -111,23 +107,3 @@ export default {
     }
 }
 </script>
-
-<style>
-.mjumbotron {
-    padding: 10px;
-}
-
-.box-part{
-    background: #FFF;
-    border-radius: 0;
-    padding: 10px 10px;
-}
-
-.text {
-    margin: 10px 0px;
-}
-
-.fa{
-     color:#4183D7;
-}
-</style>

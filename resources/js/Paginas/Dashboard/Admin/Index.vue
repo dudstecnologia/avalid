@@ -7,14 +7,31 @@
                         <b-card-text>
                             <div>
                                 <b-button variant="primary" size="sm">Gerar Relatório</b-button>
-                                <b-button v-if="a.status == 0" variant="danger" size="sm">Finalizar Avaliação</b-button>
+                                <b-button v-if="a.status == 1" variant="danger" size="sm">Finalizar Avaliação</b-button>
                             </div>
-                            
-                            <div class="row">
-                                <div class="col-md-12">
-                                    Tab contents 1    
+
+                            <b-jumbotron class="mt-3 mjumbotron">
+                                <div class="row">
+                                    <div v-for="(u, i) in avaliados" :key="i" class="col-md-2">
+                                        <div class="box-part text-center">
+                                            <b-img :src="u.foto || '/padroes/avatar2.png'" width="75" height="75" fluid rounded="circle"></b-img>
+                                            <div class="box-text">
+                                                <div class="text-truncate">{{ u.name }}</div>
+                                            </div>
+                                            <!-- <b-progress variant="primary" :value="u.totalAvaliados" :max="avaliados.length - 1" show-progress></b-progress> -->
+                                            <!-- <b-progress :max="avaliados.length - 1">
+                                                <b-progress-bar :value="u.totalAvaliados" :label="`${((u.totalAvaliados / (avaliados.length - 1)) * 100)} %`"></b-progress-bar>
+                                            </b-progress> -->
+                                            <b-progress :max="avaliados.length - 1">
+                                                <b-progress-bar :value="u.totalAvaliados">
+                                                    <strong>{{ u.totalAvaliados }} / {{ (avaliados.length - 1) }}</strong>
+                                                </b-progress-bar>
+                                            </b-progress>
+
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                            </b-jumbotron>
                         </b-card-text>
                     </b-tab>
                 </b-tabs>
@@ -42,7 +59,7 @@ export default {
             abaAtiva: null,
             avFuncionarios: [],
             avaliacaoSelecionada: null,
-            avaliados: {}
+            avaliados: []
         }
     },
     mounted() {
@@ -56,19 +73,27 @@ export default {
                     this.progresso = false
                 })
                 .catch(err => {
-                    console.log(err)
                     this.progresso = false
+                    this.$swal({
+                        icon: 'error',
+                        text: err.response.data.msg
+                    })
                 })
         },
         listarAvaliados(indice) {
-            // console.log(this.avFuncionarios[indice])
             let af = this.avFuncionarios[indice].avaliacao_funcionario
             this.axios.get(this.route('admin.avaliados-listar', af))
                 .then(({data}) => {
                     console.log(data)
+                    this.avaliados = data.avaliados
+                    this.progresso = false
                 })
                 .catch(err => {
-                    console.log(err.response)
+                    this.progresso = false
+                    this.$swal({
+                        icon: 'error',
+                        text: err.response.data.msg
+                    })
                 })
         },
         tituloAba(titulo, data) {
@@ -77,9 +102,8 @@ export default {
     },
     watch: {
         abaAtiva(v) {
-            if (!this.avaliados[v]) {
-                this.listarAvaliados(v)
-            }
+            this.progresso = true
+            this.listarAvaliados(v)
         }
     }
 }
