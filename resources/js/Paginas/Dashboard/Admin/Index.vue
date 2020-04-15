@@ -8,9 +8,6 @@
                             <div>
                                 <b-button variant="primary" size="sm">Gerar Relatório</b-button>
                                 <b-button v-if="a.status == 1" variant="danger" size="sm">Finalizar Avaliação</b-button>
-                                <b-form-checkbox v-model="autoRefresh" name="check-button" switch>
-                                    Monitorar
-                                </b-form-checkbox>
                             </div>
 
                             <b-jumbotron class="mt-3 mjumbotron">
@@ -21,16 +18,14 @@
                                             <div class="box-text">
                                                 <div class="text-truncate">{{ u.name }}</div>
                                             </div>
-                                            <!-- <b-progress variant="primary" :value="u.totalAvaliados" :max="avaliados.length - 1" show-progress></b-progress> -->
-                                            <!-- <b-progress :max="avaliados.length - 1">
-                                                <b-progress-bar :value="u.totalAvaliados" :label="`${((u.totalAvaliados / (avaliados.length - 1)) * 100)} %`"></b-progress-bar>
-                                            </b-progress> -->
                                             <b-progress :max="avaliados.length - 1">
+                                                <b-progress-bar :value="u.totalAvaliados" :label="`${((u.totalAvaliados / (avaliados.length - 1)) * 100)} %`"></b-progress-bar>
+                                            </b-progress>
+                                            <!-- <b-progress :max="avaliados.length - 1">
                                                 <b-progress-bar :value="u.totalAvaliados">
                                                     <strong>{{ u.totalAvaliados }} / {{ (avaliados.length - 1) }}</strong>
                                                 </b-progress-bar>
-                                            </b-progress>
-
+                                            </b-progress> -->
                                         </div>
                                     </div>
                                 </div>
@@ -92,7 +87,6 @@ export default {
             let af = this.avFuncionarios[this.abaAtiva].avaliacao_funcionario
             this.axios.get(this.route('admin.avaliados-listar', af))
                 .then(({data}) => {
-                    console.log(data)
                     this.avaliados = data.avaliados
                     this.progresso = false
                     this.iniciarAtualizador()
@@ -110,13 +104,15 @@ export default {
         },
         iniciarAtualizador() {
             if (!this.timer) {
+                console.log('Atualizador Iniciado')
                 this.timer = setInterval( () => {
                     this.listarAvaliados()
-                }, 7000)
+                }, 5000)
             }
         },
         pararAtualizador() {
             if (this.timer) {
+                console.log('Atualizador Finalizado')
                 clearInterval(this.timer)
             }
         }

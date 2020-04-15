@@ -74,8 +74,11 @@ class UserService
     public static function listarAvaliados($avaliacao_funcionario)
     {
         try {
+            $avFunc = AvaliacaoFuncionario::findOrFail($avaliacao_funcionario);
+
             $avaliados = User::whereStatus(true)
                             ->whereAdmin(false)
+                            ->whereDate('created_at', '<=', $avFunc->created_at)
                             ->whereNotIn('id', [Auth::user()->id])
                             ->select('id', 'name', 'foto')
                             ->get();
