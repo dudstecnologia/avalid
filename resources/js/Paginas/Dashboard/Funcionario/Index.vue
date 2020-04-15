@@ -4,7 +4,7 @@
         <div class="row">
             <div v-for="(a, index) in avaliados" :key="index" class="col-md-2">
                 <div class="box-part text-center">
-                    <b-img :src="a.foto || '/padroes/avatar2.png'" width="75" height="75" fluid rounded="circle"></b-img>
+                    <b-img :src="a.foto || '/padroes/avatar.png'" width="75" height="75" fluid rounded="circle"></b-img>
                     <div class="box-text">
                         <div class="text-truncate">{{ a.name }}</div>
                     </div>

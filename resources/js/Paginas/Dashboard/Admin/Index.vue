@@ -90,6 +90,7 @@ export default {
                     this.progresso = false
                     if (this.avFuncionarios[this.abaAtiva].status) {
                         this.iniciarAtualizador()
+                        this.verificaPendentesAvaliacao()
                     }
                 })
                 .catch(err => {
@@ -99,6 +100,13 @@ export default {
                         text: err.response.data.msg
                     })
                 })
+        },
+        verificaPendentesAvaliacao() {
+            let pendenteAvaliacao = this.avaliados.find(a => a.totalAvaliados < (this.avaliados.length - 1))
+
+            if (!pendenteAvaliacao) {
+                this.pararAtualizador()
+            }
         },
         finalizarAvaliacao(avfunc, index) {
             this.$swal({
@@ -111,23 +119,25 @@ export default {
                 cancelButtonText: 'Não'
             }).then((result) => {
                 if (result.value) {
+                    this.progresso = true
                     this.axios.get(this.route('admin.avaliacao-funcionario-finalizar', avfunc))
                         .then(({data}) => {
                             this.avFuncionarios[index].status = 0
                             this.pararAtualizador()
+                            this.progresso = false
                             this.$swal({
                                 icon: 'success',
                                 text: data.msg
                             })
                         })
                         .catch(err => {
+                            this.progresso = false
                             this.$swal({
                                 icon: 'error',
                                 text: err.response.data.msg
                             })
-                        })
-                            
-                        }
+                        })            
+                }
             })
         },
         tituloAba(titulo, data) {
