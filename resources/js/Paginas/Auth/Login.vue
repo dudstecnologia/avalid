@@ -30,7 +30,7 @@
                 <b-button class="mt-3" type="submit" variant="primary">Entrar</b-button>
             </form>
             <div id="formFooter">
-                <a class="underlineHover" href="#">Esqueceu sua senha?</a>
+				<a class="underlineHover" href="#">Esqueceu sua senha?</a>
             </div>
         </div>
     </div>
@@ -38,24 +38,24 @@
 
 <script>
 export default {
-    metaInfo: { title: 'Login' },
-  props: {
-    errors: Object,
-  },
-  data() {
-    return {
-      sending: false,
-      form: {
-        email: '',
-        password: ''
-      }
-    }
-  },
-  methods: {
-    submit() {
-        this.$inertia.post(this.route('login.attempt'), this.form)
-    }
-  }
+	metaInfo: { title: 'Login' },
+	props: {
+	errors: Object,
+	},
+	data() {
+		return {
+			sending: false,
+			form: {
+				email: '',
+				password: ''
+			}
+		}
+	},
+	methods: {
+		submit() {
+			this.$inertia.post(this.route('login.attempt'), this.form)
+		}
+	}
 }
 </script>
 

@@ -20,11 +20,6 @@
                                             <b-progress :max="avaliados.length - 1">
                                                 <b-progress-bar :value="u.totalAvaliados" :label="`${((u.totalAvaliados / (avaliados.length - 1)) * 100)} %`"></b-progress-bar>
                                             </b-progress>
-                                            <!-- <b-progress :max="avaliados.length - 1">
-                                                <b-progress-bar :value="u.totalAvaliados">
-                                                    <strong>{{ u.totalAvaliados }} / {{ (avaliados.length - 1) }}</strong>
-                                                </b-progress-bar>
-                                            </b-progress> -->
                                         </div>
                                     </div>
                                 </div>
@@ -155,12 +150,14 @@ export default {
             if (this.timer) {
                 console.log('Atualizador Finalizado')
                 clearInterval(this.timer)
+                this.timer = null
             }
         }
     },
     watch: {
         abaAtiva(v) {
             this.progresso = true
+            this.pararAtualizador()
             this.listarAvaliados()
         }
     }
