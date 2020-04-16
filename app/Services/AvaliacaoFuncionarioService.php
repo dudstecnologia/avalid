@@ -145,6 +145,7 @@ class AvaliacaoFuncionarioService
                 $questoes = $avFunc->avaliacao->questoes()->whereTipo('multipla')->get();
 
                 $notas = array();
+                $total = 0;
 
                 foreach ($questoes as $q) {
                     $nota = AvaliacaoResposta::whereAvaliacaoFuncionarioId($avFunc->id)
@@ -152,13 +153,16 @@ class AvaliacaoFuncionarioService
                                             ->whereAvaliadoId($a->id)
                                             ->select(DB::raw('sum(resposta) as total'))
                                             ->first();
-                    
-                    $notas[$q->titulo] = $nota->total / ($avaliados->count() - 1);
+
+                    $media = $nota->total / ($avaliados->count() - 1);
+                    $notas[$q->titulo] = $media;
+                    $total += $media;
                 }
 
                 $resultado[] = array(
                     'nome' => $a->name,
-                    'notas' => $notas
+                    'notas' => $notas,
+                    'total' => $total
                 );
             }
 
