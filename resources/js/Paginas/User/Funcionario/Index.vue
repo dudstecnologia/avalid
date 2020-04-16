@@ -8,7 +8,7 @@
 
 <div class="row">
     <div class="col-sm-3">
-        <img :src="foto ? foto : '/img/avatar2.png'" class="avatar img-circle img-thumbnail" @click="exibeModalFoto = !exibeModalFoto" alt="avatar">
+        <img :src="foto ? foto : '/padroes/avatar.png'" class="avatar img-circle img-thumbnail" @click="exibeModalFoto = !exibeModalFoto" alt="avatar">
     </div>
 
     <div class="col-sm-9">

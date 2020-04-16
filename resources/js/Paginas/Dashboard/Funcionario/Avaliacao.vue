@@ -1,14 +1,21 @@
 <template>
     <b-modal id="modalAvaliacao" :title="tituloModal" v-model="exibeModal" :hide-footer="true" size="xl">
+        <span class="text-danger">* Obrigatório</span>
 		<form class="formAvaliacao" @submit.prevent="salvar()">
             <div v-for="(q, index) in questoes" :key="index" class="row mt-3">
                 <div class="col-md-12">
                     <b-card>
-                        <p>{{ q.pergunta }}<span v-if="q.obrigatoria" class="text-danger">*</span></p>
+                        <p class="mb-1">
+                            <strong>
+                                {{ index + 1 }}. {{ q.titulo }} <span v-if="q.obrigatoria" class="text-danger"> *</span>
+                            </strong>
+                        </p>
+
+                        <p>{{ q.pergunta }}</p>
 
                         <b-form-group class="text-center" v-if="q.tipo == 'multipla'">
                             <b-form-radio-group v-model="form[q.id]" :name="'multi' + q.id" :required="q.obrigatoria ? true : false">
-                                <b-form-radio v-for="n in q.range.final" :key="n" :value="n">{{ n }}</b-form-radio>
+                                <b-form-radio v-for="n in 10" :key="n" :value="n">{{ n }}</b-form-radio>
                             </b-form-radio-group>
                         </b-form-group>
 
@@ -64,9 +71,6 @@
 				if (!this.exibeModal) {
 					this.form = {}
 				}
-				// if (this.idUsuario) {
-				// 	this.getDadosUsuario()
-				// }
 			}
 		}
 	}
@@ -77,6 +81,6 @@
     background-color: #e9ecef;
 }
 .card-body {
-    padding: 5px;
+    padding: 10px;
 }
 </style>
