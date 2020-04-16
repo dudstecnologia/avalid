@@ -17,30 +17,30 @@
                         {{ q.tipo == 'multipla' ? 'Múltipla Escolha' : 'Disertativa' }}
                     </div>
 
+                    <b-form-input
+                        class="mb-1"
+                        v-model="q.titulo"
+                        placeholder="Título da pergunta"
+                        :state="q.titulo.length > 0"
+                        :required="true">
+                    </b-form-input>
+
                     <b-form-textarea
                         v-model="q.pergunta"
-                        placeholder="Título da pergunta"
+                        placeholder="Conteúdo da pergunta"
                         :state="q.pergunta.length > 0"
                         :required="true"
                         rows="2">
                     </b-form-textarea>
 
                     <div class="row mt-2">
-                        <div class="col-md-3 align-middle">
+                        <div class="col-md-6 align-middle">
                             <b-form-checkbox v-model="q.obrigatoria" name="check-button" switch>
                                 Obrigatória
                             </b-form-checkbox>
                         </div>
-                        <div class="col-md-6 text-center">
-                            <span v-if="q.tipo == 'multipla'">
-                                <label for="sb-inline">De</label>
-                                <b-form-spinbutton id="sb-inline" v-model="q.range.inicio" inline></b-form-spinbutton>
-                                <label for="sb-inline">até</label>
-                                <b-form-spinbutton id="sb-inline" v-model="q.range.final" inline></b-form-spinbutton>
-                            </span>
-                        </div>
-                        <div class="col-md-3 text-right">
-                            <b-button variant="danger" size="sm"><i class="fas fa-trash"></i></b-button>
+                        <div class="col-md-6 text-right">
+                            <b-button variant="danger" size="sm" @click="excluirQuestao(index)"><i class="fas fa-trash"></i></b-button>
                         </div>
                     </div>
                 </b-card>
@@ -74,23 +74,23 @@ export default {
     methods: {
         addQuestao() {
             this.questoes.push({
+                titulo: '',
                 pergunta: '',
                 tipo: this.tipo,
-                range: {
-                    inicio: 1,
-                    final: 10
-                },
                 obrigatoria: true
             })
+        },
+        excluirQuestao(index) {
+            this.questoes.splice(index, 1)
         },
         setValoresIniciais() {
             if (this.pQuestoes) {
                 this.questoes = this.pQuestoes.map(q => {
                     return {
                         id: q.id,
+                        titulo: q.titulo,
                         pergunta: q.pergunta,
                         tipo: q.tipo,
-                        range: q.range,
                         obrigatoria: q.obrigatoria ? true : false
                     }
                 })

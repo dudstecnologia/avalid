@@ -7,14 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Questao extends Model
 {
     protected $fillable = [
+        'titulo',
         'pergunta',
         'tipo',
-        'range',
         'obrigatoria'
-    ];
-
-    protected $casts = [
-        'range' => 'json',
     ];
 
     public function avaliacao()

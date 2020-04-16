@@ -15,9 +15,9 @@ class CreateQuestaosTable extends Migration
     {
         Schema::create('questaos', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('titulo');
             $table->text('pergunta');
             $table->string('tipo');
-            $table->json('range')->nullable();
             $table->boolean('obrigatoria')->default(true);
             $table->unsignedBigInteger('avaliacao_id');
             $table->foreign('avaliacao_id')->references('id')->on('avaliacaos')->onDelete('cascade');
