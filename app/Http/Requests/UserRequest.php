@@ -26,7 +26,7 @@ class UserRequest extends FormRequest
         return [
             'name'      => ['required', 'string', 'max:255'],
             'email'     => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $this->user . ',id' ],
-            'password'  => ($this->getMethod() == 'POST') ? ['required', 'string', 'min:8', 'confirmed'] : [],
+            'password'  => ($this->getMethod() == 'POST') ? ['required', 'string', 'min:5', 'confirmed'] : [],
             'admin'     => ['required', 'integer'],
             'status'    => ['required', 'integer'],
         ];
