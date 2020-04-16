@@ -20,7 +20,7 @@ class CreateAvaliacaoRespostasTable extends Migration
             $table->unsignedBigInteger('questao_id');
             $table->unsignedBigInteger('avaliador_id');
             $table->unsignedBigInteger('avaliado_id');
-            $table->foreign('avaliacao_funcionario_id')->references('id')->on('avaliacaos');
+            $table->foreign('avaliacao_funcionario_id')->references('id')->on('avaliacao_funcionarios');
             $table->foreign('questao_id')->references('id')->on('questaos');
             $table->foreign('avaliador_id')->references('id')->on('users');
             $table->foreign('avaliado_id')->references('id')->on('users');
