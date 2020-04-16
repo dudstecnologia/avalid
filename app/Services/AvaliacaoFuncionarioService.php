@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Throwable;
 
+use function PHPSTORM_META\map;
+
 class AvaliacaoFuncionarioService
 {
     public static function listarAvaliacoesAdmin()
@@ -130,13 +132,36 @@ class AvaliacaoFuncionarioService
         try {
             $avFunc = AvaliacaoFuncionario::findOrFail($avaliacao_funcionario);
 
-            dd($avFunc->avaliacaoRespostas);
+            // dd($avFunc->avaliacaoRespostas);
+            // DB::enableQueryLog();
+            // dd(DB::getQueryLog());
 
-            $avaliados = $avFunc->avaliacaoRespostas()
-                                ->select('avaliado_id')
-                                ->groupby('avaliado_id')
-                                ->get();
+            $totalAvaliados = $avFunc->avaliacaoRespostas()->select('avaliado_id')
+                                ->groupBy('avaliado_id')
+                                ->get()->count();
+            
+            dd($totalAvaliados);
 
+            $notas = array();
+
+            foreach ($avFunc->avaliacaoRespostas as $r) {
+                if ($r->questao->tipo == 'multipla') {
+                    $notas[] = array(
+                        "id" => $r->id,
+                        "resposta" => $r->resposta,
+                        "questao" => $r->questao,
+                        "avaliador_id" => $r->avaliador_id,
+                        "avaliado_id" => $r->avaliado_id,
+                        "avaliador" => $r->avaliador,
+                        "avaliado" => $r->avaliado
+                    );
+                }
+            }
+
+            return array(
+                'status' => true,
+                'notas' => $notas
+            );
 
             // $avFunc->update(['status' => $avFunc->status ? false : true]);
 
