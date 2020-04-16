@@ -6,7 +6,7 @@
                     <b-tab v-for="(a, index) in avFuncionarios" :key="a.avaliacao_funcionario" :title="tituloAba(a.titulo_avaliacao, a.periodo)">
                         <b-card-text>
                             <div>
-                                <b-button variant="primary" size="sm">Gerar Relatório</b-button>
+                                <b-button v-if="a.status == 0" variant="primary" size="sm" @click="modalRelatorioCompleto()">Gerar Relatório</b-button>
                                 <b-button v-if="a.status == 1" variant="danger" size="sm" @click="finalizarAvaliacao(a.avaliacao_funcionario, index)">Finalizar Avaliação</b-button>
                             </div>
                             <b-jumbotron class="mt-3 mjumbotron">
@@ -32,11 +32,14 @@
                 </p>
             </b-card>
         </b-overlay>
+
+        <relatorio-completo ref="modalRelatorioCompleto"></relatorio-completo>
     </div>
 </template>
 
 <script>
 import Layout from '../../../Componentes/Layout'
+import RelatorioCompleto from '../../../Componentes/RelatorioCompleto'
 import moment from 'moment'
 
 export default {
@@ -45,6 +48,9 @@ export default {
     props: [
         'auth'
     ],
+    components: {
+        RelatorioCompleto
+    },
     data () {
         return {
             progresso: true,
@@ -134,6 +140,10 @@ export default {
                         })            
                 }
             })
+        },
+        modalRelatorioCompleto() {
+            this.$refs.modalRelatorioCompleto.avFuncionario = this.avFuncionarios[this.abaAtiva]
+            this.$refs.modalRelatorioCompleto.exibeModal = true
         },
         tituloAba(titulo, data) {
             return `${titulo} - ${moment(data).format('MM/YYYY')}`

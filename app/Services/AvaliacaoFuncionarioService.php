@@ -124,4 +124,33 @@ class AvaliacaoFuncionarioService
             );
         }
     }
+
+    public static function relatorioCompleto($avaliacao_funcionario)
+    {
+        try {
+            $avFunc = AvaliacaoFuncionario::findOrFail($avaliacao_funcionario);
+
+            dd($avFunc->avaliacaoRespostas);
+
+            $avaliados = $avFunc->avaliacaoRespostas()
+                                ->select('avaliado_id')
+                                ->groupby('avaliado_id')
+                                ->get();
+
+
+            // $avFunc->update(['status' => $avFunc->status ? false : true]);
+
+            return array(
+                'status' => true,
+                'msg' => 'Avaliação finalizada com sucesso'
+            );
+        } catch (Throwable $th) {
+            
+            return array(
+                'status' => false,
+                'msg' => 'Erro ao finalizar a avaliação',
+                'erro' => $th->getMessage(),
+            );
+        }
+    }
 }
