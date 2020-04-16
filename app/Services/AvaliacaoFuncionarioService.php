@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\Avaliacao;
 use App\Models\AvaliacaoFuncionario;
+use App\Models\AvaliacaoResposta;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
@@ -132,48 +134,43 @@ class AvaliacaoFuncionarioService
         try {
             $avFunc = AvaliacaoFuncionario::findOrFail($avaliacao_funcionario);
 
-            // dd($avFunc->avaliacaoRespostas);
-            // DB::enableQueryLog();
-            // dd(DB::getQueryLog());
+            $avaliados = User::whereAdmin(false)
+                            ->whereDate('created_at', '<=', $avFunc->created_at)
+                            ->select('id', 'name')
+                            ->get();
 
-            $totalAvaliados = $avFunc->avaliacaoRespostas()->select('avaliado_id')
-                                ->groupBy('avaliado_id')
-                                ->get()->count();
-            
-            dd($totalAvaliados);
+            $resultado = array();
 
-            $notas = array();
+            foreach ($avaliados as $a) {
+                $questoes = $avFunc->avaliacao->questoes()->whereTipo('multipla')->get();
 
-            foreach ($avFunc->avaliacaoRespostas as $r) {
-                if ($r->questao->tipo == 'multipla') {
-                    $notas[] = array(
-                        "id" => $r->id,
-                        "resposta" => $r->resposta,
-                        "questao" => $r->questao,
-                        "avaliador_id" => $r->avaliador_id,
-                        "avaliado_id" => $r->avaliado_id,
-                        "avaliador" => $r->avaliador,
-                        "avaliado" => $r->avaliado
-                    );
+                $notas = array();
+
+                foreach ($questoes as $q) {
+                    $nota = AvaliacaoResposta::whereAvaliacaoFuncionarioId($avFunc->id)
+                                            ->whereQuestaoId($q->id)
+                                            ->whereAvaliadoId($a->id)
+                                            ->select(DB::raw('sum(resposta) as total'))
+                                            ->first();
+                    
+                    $notas[$q->titulo] = $nota->total / ($avaliados->count() - 1);
                 }
+
+                $resultado[] = array(
+                    'nome' => $a->name,
+                    'notas' => $notas
+                );
             }
 
             return array(
                 'status' => true,
-                'notas' => $notas
-            );
-
-            // $avFunc->update(['status' => $avFunc->status ? false : true]);
-
-            return array(
-                'status' => true,
-                'msg' => 'Avaliação finalizada com sucesso'
+                'resultado' => $resultado
             );
         } catch (Throwable $th) {
             
             return array(
                 'status' => false,
-                'msg' => 'Erro ao finalizar a avaliação',
+                'msg' => 'Erro ao gerar o relatório',
                 'erro' => $th->getMessage(),
             );
         }

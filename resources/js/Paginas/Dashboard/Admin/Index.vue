@@ -18,7 +18,7 @@
                                                 <div class="text-truncate">{{ u.name }}</div>
                                             </div>
                                             <b-progress :max="avaliados.length - 1">
-                                                <b-progress-bar :value="u.totalAvaliados" :label="`${((u.totalAvaliados / (avaliados.length - 1)) * 100)} %`"></b-progress-bar>
+                                                <b-progress-bar :value="u.totalAvaliados" :label="`${Math.round((u.totalAvaliados / (avaliados.length - 1)) * 100)} %`"></b-progress-bar>
                                             </b-progress>
                                         </div>
                                     </div>
