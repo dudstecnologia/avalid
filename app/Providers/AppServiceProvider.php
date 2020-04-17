@@ -50,5 +50,9 @@ class AppServiceProvider extends ServiceProvider
                 ];
             }
         });
+
+        Inertia::share('_token', function () {
+            return csrf_token();
+        });
     }
 }

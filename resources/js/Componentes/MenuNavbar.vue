@@ -27,11 +27,16 @@
                         <b-dropdown-item href="#">E-mail</b-dropdown-item>
                     </b-nav-item-dropdown>
 
-                    <b-nav-item @click="logout()" right>Sair</b-nav-item>
+                    <!-- <b-nav-item @click="logout()" right>Sair</b-nav-item> -->
+
+                    <b-nav-item @click="logoutNovo()" right>Sair</b-nav-item>
                 </b-navbar-nav>
             </b-collapse>
         </div>
     </b-navbar>
+    <form id="form-logout" :action="this.route('logout')" method="post">
+        <input type="hidden" name="_token" :value="this.$page._token">
+    </form>
 </span>
 </template>
 
@@ -45,6 +50,9 @@ export default {
     methods: {
         logout() {
             this.$inertia.post(this.route('logout'))
+        },
+        logoutNovo() {
+            document.getElementById('form-logout').submit()
         }
     }
 }
