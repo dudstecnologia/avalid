@@ -5,7 +5,7 @@
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th>Nome</th>
+						<th>Funcionário</th>
 						<th v-for="(i, index) in baseTabela" :key="index">
 							<div class="vertical-text">
 								<div class="vertical-text__inner">

@@ -23,10 +23,6 @@
                         <inertia-link class="link-simples" v-if="!$page.auth.admin" :href="route('funcionario.user.index')">Perfil</inertia-link>
                     </b-nav-item>
 
-                    <b-nav-item-dropdown v-if="$page.auth.admin" text="Configurações" right>
-                        <b-dropdown-item href="#">E-mail</b-dropdown-item>
-                    </b-nav-item-dropdown>
-
                     <!-- <b-nav-item @click="logout()" right>Sair</b-nav-item> -->
 
                     <b-nav-item @click="logoutNovo()" right>Sair</b-nav-item>
