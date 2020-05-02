@@ -137,7 +137,7 @@ export default {
                                 icon: 'error',
                                 text: err.response.data.msg
                             })
-                        })            
+                        })
                 }
             })
         },
@@ -150,7 +150,6 @@ export default {
         },
         iniciarAtualizador() {
             if (!this.timer) {
-                console.log('Atualizador Iniciado')
                 this.timer = setInterval( () => {
                     this.listarAvaliados()
                 }, 5000)
@@ -158,7 +157,6 @@ export default {
         },
         pararAtualizador() {
             if (this.timer) {
-                console.log('Atualizador Finalizado')
                 clearInterval(this.timer)
                 this.timer = null
             }

@@ -14,7 +14,7 @@
 
                 <b-card>
                     <div class="badge badge-secondary mb-2">
-                        {{ q.tipo == 'multipla' ? 'Múltipla Escolha' : 'Disertativa' }}
+                        {{ q.tipo == 'multipla' ? 'Múltipla Escolha' : 'Dissertativa' }}
                     </div>
 
                     <b-form-input
@@ -60,7 +60,7 @@ export default {
             tipo: 'multipla',
             tipos: [
                 { value: 'multipla', text: 'Múltipla Escolha' },
-                { value: 'disertativa', text: 'Disertativa' },
+                { value: 'dissertativa', text: 'Dissertativa' },
             ],
             questoes: [],
             obrigatoria: [

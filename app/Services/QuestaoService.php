@@ -10,17 +10,6 @@ use Throwable;
 
 class QuestaoService
 {
-    /*
-    public static function show($id)
-    {
-        try {
-            return User::findOrFail($id);
-        } catch (Throwable $th) {
-            return null;
-        }
-    }
-    */
-
     public static function store(Avaliacao $avaliacao, $request)
     {
         try {
@@ -33,7 +22,7 @@ class QuestaoService
             throw new Exception($th->getMessage());
         }
     }
-    
+
     public static function update(Avaliacao $avaliacao, $request)
     {
         try {
@@ -47,17 +36,4 @@ class QuestaoService
             throw new Exception($th->getMessage());
         }
     }
-
-    /*
-    public static function alterarStatus($id)
-    {
-        try {
-            $user = User::findOrFail($id);
-            $user->update(['status' => $user->status ? false : true]);
-            return $user;
-        } catch (Throwable $e) {
-            return null;
-        }
-    }
-    */
 }

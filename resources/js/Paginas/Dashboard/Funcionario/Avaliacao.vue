@@ -19,7 +19,7 @@
                             </b-form-radio-group>
                         </b-form-group>
 
-                        <b-form-textarea v-if="q.tipo == 'disertativa'"
+                        <b-form-textarea v-if="q.tipo == 'dissertativa'"
                             v-model="form[q.id]"
                             placeholder="..."
                             :required="q.obrigatoria ? true : false"
